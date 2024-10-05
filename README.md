@@ -28,7 +28,7 @@
 ### João Vitor Santos de Souza - Estatísticas gerais (8)
 ### Pedro Francisco Faviero Willmsen - Verificar o valor (9)
 ### Pedro Henrique Reginato de Carli - HUD básico - O jogador logado poderá selecionar uma proposta de troca para ver seus detalhes e aceitar ou declinar a proposta. (7)
-### Rodrigo Macuglia Gagliardi de Lima - Listar dos próprios itens em ordem alfabética (2)
+### Rodrigo Macuglia Gagliardi de Lima - Listar os próprios itens em ordem alfabética (2)
 
 ## Métodos principais
 ### 1) O sistema deverá permitir que um novo jogador se cadastre no sistema. O sistema deverá permitir que um jogador entre no sistema com seu email e pin.

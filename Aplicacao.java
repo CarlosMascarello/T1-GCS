@@ -11,10 +11,35 @@ public class Aplicacao {
     private CadastroJogador cadastroJogador;
     private CadastroItem cadastroItem;
 
-    public Aplicacao(){
+    public Aplicacao() {
         cadastroJogador = new CadastroJogador();
         cadastroItem = new CadastroItem();
     }
+
+    /** Menu */
+    /** Jogadores */
+    /**
+     * nome, email, pin
+     */
+    Jogador j1 = new Jogador("Ricardo Carvalho", "rcarvalho@gmail.com", 212121);
+    Jogador j2 = new Jogador("Gustavo Silva", "gsilva@gmail.com", 191919);
+    Jogador j3 = new Jogador("Roberto Cobre", "robertinhoC@gmail.com", 696969);
+    Jogador j4 = new Jogador("Júlia Pinheiro", "julipinheiro@gmail.com", 252525);
+    Jogador j5 = new Jogador("Gabriel Ribeiro", "gabrielr@gmail.com", 272727);
+
+    /** Itens */
+    /**
+     * nome, descricao, tipo, preco
+     */
+    Item i1 = new Item("Katana", "Katana do Leonardo - Tartarugas Ninjas (Item de evento). Voltado a confrontos de curtas distâncias, a Katana tem uma vantagem por ser leve, podendo proporcionar ataques rápidos", "Arma Branca", 250.00);
+    Item i2 = new Item("Foice", "Arma branca que consegue dar ataques de curtas a médias distâncias, porém seu ataque será lento", "Arma Branca", 225.50);
+    Item i3 = new Item("Arco de longa distância", "Arco feita para confronto de longas distâncias. Contém alto dano, porém demora para recarregar", "Arma a Distância", 100.00);
+    Item i4 = new Item("Arco padrão", "Arco padrão", "Arma de Longa Distância", 150.00);
+    Item i5 = new Item("Arco de disparo rápido", "Arco feito para confrontos de médias distâncias. Contém alto poder de disparo, porém não tem tanto alcance", "Arma a Distância", 200.00);
+    Item i6 = new Item("Armadura", "Feita de couro, por mais leve que seja, ela não suporta tanto ataques", "Proteção", 125.00);
+    Item i7 = new Item("Armadura", "Feita com ferro, suporta ataques pesados, porém o jogador perde velocidade", "Proteção", 200.00);
+    Item i8 = new Item("Escudo", "Feito com madeira e ferro, ele consegue resistir ataques de curta e longas distâncias", "Proteção", 75.50);
+    Item i9 = new Item("Flecha", "Item disparado pelo arco", "Ferramenta", 50.00);
 
     public void executar() {
 
@@ -112,7 +137,7 @@ public class Aplicacao {
             }
         }
 
-        Jogador jogador = new Jogador(nome, email, pin );
+        Jogador jogador = new Jogador(nome, email, pin);
         if (cadastroJogador.cadastroJogador(jogador)) {
             System.out.println("Jogador Cadastrado com sucesso!");
         }
@@ -151,7 +176,7 @@ public class Aplicacao {
 
     public void removerItem() {
         String nomeItem;
-         int pin;
+        int pin;
 
         System.out.println("Digite o seu pin para remover o item: ");
         pin = sc.nextInt();
@@ -207,7 +232,7 @@ public class Aplicacao {
         }
     }
 
-    public void buscaItensNome(){
+    public void buscaItensNome() {
         String nomeItem;
         System.out.println("Digite o nome do item a ser procurado. ");
         nomeItem = sc.nextLine();

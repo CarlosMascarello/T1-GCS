@@ -24,10 +24,9 @@ public class CadastroJogador {
      */
     public boolean cadastroJogador(Jogador novoJogador) {
         for (Jogador jogador : jogadores) {
-            if (jogador.getPin().equals(novoJogador.getPin())) {
+            if (jogador.getEmail().equals(novoJogador.getEmail())) {
                 return false;
             }
-
         }
         jogadores.add(novoJogador);
         return true;
@@ -40,13 +39,22 @@ public class CadastroJogador {
      * @param pin   Confere se existe um jogador com este pin.
      * @return true se o email e pin forem iguais, false se o pin ou o email estiverem errados.
      */
-    public boolean entrarSistema(String email, String pin) {
+    public boolean entrarSistema(String email, int pin) {
         for (Jogador jogador : jogadores) {
-            if (jogador.getEmail().equals(email) && jogador.getPin().equals(pin)) {
+            if (jogador.getEmail().equals(email) && jogador.getPin() == pin) {
                 return true;
             }
         }
         return false;
+    }
+
+    public Jogador buscarJogadorPorPin(String email) {
+        for (Jogador jogador : jogadores) {
+            if (jogador.getEmail().equals(email)) {
+                return jogador;
+            }
+        }
+        return null;
     }
 }
 

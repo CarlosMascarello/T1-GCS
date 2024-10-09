@@ -7,8 +7,12 @@ public class Aplicacao {
     public static final String VERDE = "\u001B[32m";
     public static final String RESET = "\u001B[0m";
     private static List<PropostaTroca> propostas = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+    private Jogador jogador;
+    private CadastroJogador cadastroJogador;
+    private CadastroItem cadastroItem;
 
-    private static void exibirMenu() {
+    public void exibirMenu() {
         Scanner scanner = new Scanner(System.in);
         int opcao;
 
@@ -32,7 +36,7 @@ public class Aplicacao {
 
             switch (opcao) {
                 case 1:
-                    // Implementar cadastro de jogador
+                    registrarJogador();
                     break;
                 case 2:
                     // Implementar visualização dos itens do jogador
@@ -76,8 +80,96 @@ public class Aplicacao {
         } while (opcao != 0);
     }
 
+    public void registrarJogador() {
+        String nome;
+        String email;
+        int pin = 0;
+
+        System.out.println("Digite seu nome: ");
+        nome = scanner.nextLine();
+
+        System.out.println("Digite seu email: ");
+        email = scanner.nextLine();
+
+        boolean pinValido = false;
+        while (!pinValido) {
+            System.out.println("Digite seu pin (deve conter exatamente 6 números): ");
+            pin = scanner.nextInt();
+
+
+            if (String.valueOf(pin).length() == 6) {
+                pinValido = true;
+
+            } else {
+                System.out.println("Pin inválido! O pin deve conter exatamente 6 números.");
+            }
+        }
+
+        Jogador jogador = new Jogador(nome, email, pin );
+        if (cadastroJogador.cadastroJogador(jogador)) {
+            System.out.println("Jogador Cadastrado com sucesso!");
+        }
+    }
+
+    public void adicionarItem() {
+        String nomeItem;
+        String descricao;
+        String tipo;
+        double preco;
+        String pin;
+
+        System.out.println("Digite o seu pin: ");
+        pin = scanner.nextLine();
+
+        Jogador jogador = cadastroJogador.buscarJogadorPorPin(pin);
+
+        if (jogador != null) {
+            System.out.println("Digite o nome do item: ");
+            nomeItem = scanner.nextLine();
+            System.out.println("Digite a descrição do item: ");
+            descricao = scanner.nextLine();
+            System.out.println("Digite a tipo do item: ");
+            tipo = scanner.nextLine();
+            System.out.println("Digite o preço do item: ");
+            preco = scanner.nextDouble();
+            scanner.nextLine();
+
+            Item item = new Item(nomeItem, descricao, tipo, preco);
+            cadastroItem.addItemAoJogador(item, pin);
+            System.out.println("Item adicionado com sucesso!");
+        } else {
+            System.out.println("Jogador não encontrado. Faça o login primeiro!");
+        }
+    }
+
+    public void removerItem() {
+        String nomeItem;
+        String pin;
+
+        System.out.println("Digite o seu pin para remover o item: ");
+        pin = scanner.nextLine();
+
+
+        Jogador jogador = cadastroJogador.buscarJogadorPorPin(pin);
+        if (jogador != null) {
+            System.out.println("Digite o nome do item a ser removido: ");
+            nomeItem = scanner.nextLine();
+
+            Item item = cadastroItem.buscarItemPorNome(nomeItem);
+
+            if (item != null) {
+                cadastroItem.removeItem(item, pin);
+                System.out.println("Item removido com sucesso!");
+            } else {
+                System.out.println("Item não encontrado no cadastro.");
+            }
+        } else {
+            System.out.println("Jogador não encontrado. Faça o login primeiro!");
+        }
+    }
+
     private static void selecionarPropostaTroca() {
-        Scanner scanner = new Scanner(System.in);
+
         if (propostas.isEmpty()) {
             System.out.println("Nenhuma proposta de troca disponível.");
             return;
@@ -108,7 +200,4 @@ public class Aplicacao {
         }
     }
 
-    public static void main(String[] args) {
-        exibirMenu();
-    }
 }

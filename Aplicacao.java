@@ -10,6 +10,7 @@ public class Aplicacao {
     private static Scanner sc = new Scanner(System.in);
     private CadastroJogador cadastroJogador;
     private CadastroItem cadastroItem;
+    private Jogador jogador;
 
     public Aplicacao() {
         cadastroJogador = new CadastroJogador();
@@ -101,6 +102,12 @@ public class Aplicacao {
                 case 12:
                     selecionarPropostaTroca();
                     break;
+                case 13:
+                    cadastroJogador.listarJogadores();
+                    break;
+                case 14:
+                    listarItems();
+                    break;
                 case 0:
                     System.out.println("Saindo do sistema...");
                     break;
@@ -115,19 +122,21 @@ public class Aplicacao {
         String email;
         int pin = 0;
 
+        sc.nextLine();
+
         System.out.println("Digite seu nome: ");
         nome = sc.nextLine();
-        sc.next();
+
 
         System.out.println("Digite seu email: ");
         email = sc.nextLine();
-        sc.next();
+
 
         boolean pinValido = false;
         while (!pinValido) {
             System.out.println("Digite seu pin (deve conter exatamente 6 números): ");
             pin = sc.nextInt();
-
+            sc.nextLine();
 
             if (String.valueOf(pin).length() == 6) {
                 pinValido = true;
@@ -161,6 +170,7 @@ public class Aplicacao {
             sc.next();
             System.out.println("Digite a descrição do item: ");
             descricao = sc.nextLine();
+            sc.nextLine();
             System.out.println("Digite a tipo do item: ");
             tipo = sc.nextLine();
             System.out.println("Digite o preço do item: ");
@@ -240,4 +250,12 @@ public class Aplicacao {
         cadastroItem.buscarItemPorNome(nomeItem);
     }
 
+    public void listarItems() {
+        int pin;
+
+        System.out.println("Digite seu pin: ");
+        pin = sc.nextInt();
+
+        cadastroItem.listarItems(pin);
+    }
 }

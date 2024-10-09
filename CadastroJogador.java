@@ -60,6 +60,16 @@ public class CadastroJogador {
         }
         return null;
     }
+
+    public void listarJogadores() {
+        if (jogadores.isEmpty()) {
+            System.out.println("Nenhum jogador cadastrado.");
+        } else {
+            for (Jogador jogador : jogadores) {
+                System.out.println("Nome: " + jogador.getNome() + ", E-mail: " + jogador.getEmail() + ", Pin: "+jogador.getPin());
+            }
+        }
+    }
 }
 
 

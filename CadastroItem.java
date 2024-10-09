@@ -6,40 +6,54 @@ import java.util.ArrayList;
  */
 public class CadastroItem {
     private CadastroJogador cadastro;
-    private Jogador jogador;
 
     public CadastroItem() {
         this.cadastro = new CadastroJogador();
-        this.jogador = jogador;
     }
 
 
     public void addItemJogador(Item item, int pin) {
-        for (Jogador j : cadastro.getJogadores()) {
-            if (j.getPin() == pin) {
-                j.adicionarItem(item);
-                jogador.getItens().add(item);
-                return;
-            }
+        Jogador jogador = cadastro.buscarJogadorPorPin(pin);
+
+        if (jogador != null) {
+            jogador.adicionarItem(item);
+        } else {
+            System.out.println("Jogador não encontrado.");
         }
     }
 
     public void removeItem(Item item, int pin) {
-        for (Jogador j : cadastro.getJogadores()) {
-            if (j.getPin() == pin) {
-                j.removerItem(item);
-               jogador.getItens().remove(item);
-                return;
-            }
+        Jogador jogador = cadastro.buscarJogadorPorPin(pin);
+
+        if (jogador != null) {
+            jogador.removerItem(item);
+        } else {
+            System.out.println("Jogador não encontrado.");
         }
     }
 
+
     public Item buscarItemPorNome(String nomeItem) {
-        for (Item item : jogador.getItens()) {
-            if (item.getNome().equals(nomeItem)) {
-                return item;
+        for (Jogador j : cadastro.getJogadores()) {
+            for (Item item : j.getItens()) {
+                if (item.getNome().equals(nomeItem)) {
+                    return item;
+                }
             }
         }
         return null;
     }
+
+    public void listarItems(int pin) {
+        Jogador jogador = cadastro.buscarJogadorPorPin(pin);
+
+        if (jogador != null) {
+            for (Item item : jogador.getItens()) {
+                System.out.println(item);
+            }
+        } else {
+            System.out.println("Jogador não encontrado.");
+        }
+    }
 }
+

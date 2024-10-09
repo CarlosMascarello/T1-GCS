@@ -158,6 +158,7 @@ public class Aplicacao {
         if (jogador != null) {
             System.out.println("Digite o nome do item: ");
             nomeItem = sc.nextLine();
+            sc.next();
             System.out.println("Digite a descrição do item: ");
             descricao = sc.nextLine();
             System.out.println("Digite a tipo do item: ");

@@ -5,38 +5,37 @@ import java.util.ArrayList;
  * Classe CadastroItem representa o cadastro de um novo item ao jogador
  */
 public class CadastroItem {
-    private ArrayList<Item> itens;
     private CadastroJogador cadastro;
-    private ArrayList<Jogador> jogadores;
+    private Jogador jogador;
 
     public CadastroItem() {
-        this.itens = new ArrayList<>();
         this.cadastro = new CadastroJogador();
+        this.jogador = jogador;
     }
 
 
     public void addItemJogador(Item item, int pin) {
-        for (Jogador j : jogadores) {
+        for (Jogador j : cadastro.getJogadores()) {
             if (j.getPin() == pin) {
                 j.adicionarItem(item);
-                this.itens.add(item);
+                jogador.getItens().add(item);
                 return;
             }
         }
     }
 
     public void removeItem(Item item, int pin) {
-        for (Jogador j : jogadores) {
+        for (Jogador j : cadastro.getJogadores()) {
             if (j.getPin() == pin) {
                 j.removerItem(item);
-                this.itens.remove(item);
+               jogador.getItens().remove(item);
                 return;
             }
         }
     }
 
     public Item buscarItemPorNome(String nomeItem) {
-        for (Item item : itens) {
+        for (Item item : jogador.getItens()) {
             if (item.getNome().equals(nomeItem)) {
                 return item;
             }

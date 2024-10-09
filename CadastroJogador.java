@@ -32,6 +32,10 @@ public class CadastroJogador {
         return true;
     }
 
+    public ArrayList<Jogador> getJogadores() {
+        return jogadores;
+    }
+
     /**
      * Entra no sistema usando como parametro o email e pin.
      *

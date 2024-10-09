@@ -1,0 +1,60 @@
+import java.util.ArrayList;
+import java.util.List;
+
+enum Raridade {
+    COMUM,
+    RARO,
+    EPICO
+}
+
+class Item {
+    private String nome;
+    private Raridade raridade;
+
+    public Item(String nome, Raridade raridade) {
+        this.nome = nome;
+        this.raridade = raridade;
+    }
+
+    public Raridade getRaridade() {
+        return raridade;
+    }
+
+    @Override
+    public String toString() {
+        return nome + " (" + raridade + ")";
+    }
+}
+
+public class facul {
+    public static void main(String[] args) {
+        List<Item> itens = new ArrayList<>();
+        itens.add(new Item("Espada", Raridade.COMUM));
+        itens.add(new Item("Escudo", Raridade.RARO));
+        itens.add(new Item("Anel Mágico", Raridade.EPICO));
+        itens.add(new Item("Poção de Cura", Raridade.COMUM));
+        itens.add(new Item("Armadura de Ouro", Raridade.EPICO));
+
+        List<Item> comuns = new ArrayList<>();
+        List<Item> raros = new ArrayList<>();
+        List<Item> epicos = new ArrayList<>();
+
+        for (Item item : itens) {
+            switch (item.getRaridade()) {
+                case COMUM:
+                    comuns.add(item);
+                    break;
+                case RARO:
+                    raros.add(item);
+                    break;
+                case EPICO:
+                    epicos.add(item);
+                    break;
+            }
+        }
+
+        System.out.println("Itens Comuns: " + comuns);
+        System.out.println("Itens Raros: " + raros);
+        System.out.println("Itens Épicos: " + epicos);
+    }
+}

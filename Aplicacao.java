@@ -88,7 +88,7 @@ public class Aplicacao {
                     selecionarPropostaTroca();
                     break;
                 case 8:
-                    // Implementar exibição de estatísticas gerais
+                    exibirEstatisticasGerais();
                     break;
                 case 9:
                     // Implementar verificação do valor de um item
@@ -258,4 +258,15 @@ public class Aplicacao {
 
         cadastroItem.listarItems(pin);
     }
+    public void exibirEstatisticasGerais() {
+        int totalJogadores = cadastroJogador.getTotalJogadores();
+        int totalItens = cadastroItem.getTotalItens();
+        int totalPropostas = propostas.size();
+
+        System.out.println("Estatísticas gerais:");
+        System.out.println("Total de jogadores: " + totalJogadores);
+        System.out.println("Total de itens: " + totalItens);
+        System.out.println("Total de propostas de troca: " + totalPropostas);
+    }
+
 }

@@ -15,7 +15,7 @@ public class CadastroItem {
     }
 
 
-    public void addItemAoJogador(Item item, int pin) {
+    public void addItemJogador(Item item, int pin) {
         for (Jogador j : jogadores) {
             if (j.getPin() == pin) {
                 j.adicionarItem(item);

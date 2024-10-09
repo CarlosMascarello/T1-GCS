@@ -36,7 +36,7 @@ public class CadastroJogador {
      * Entra no sistema usando como parametro o email e pin.
      *
      * @param email Confere se existe algum jogador com este email.
-     * @param pin   Confere se existe um jogador com este pin.
+     * @param pin   Confere se existe um j**ogador com este pin.
      * @return true se o email e pin forem iguais, false se o pin ou o email estiverem errados.
      */
     public boolean entrarSistema(String email, int pin) {

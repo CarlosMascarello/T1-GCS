@@ -22,6 +22,7 @@ public class Aplicacao {
 
         do {
             System.out.println(VERDE + "### Sistema de Trocas ###" + RESET);
+            System.out.println(VERDE + "DIGITE A OPÇÃO DESEJADA" + RESET);
             System.out.println(VERDE + "[1] Cadastrar novo jogador" + RESET);
             System.out.println(VERDE + "[2] Ver seus itens" + RESET);
             System.out.println(VERDE + "[3] Ver itens dos jogadores" + RESET);
@@ -49,7 +50,7 @@ public class Aplicacao {
                     // Implementar visualização dos itens de outros jogadores
                     break;
                 case 4:
-                    // Implementar busca de itens
+                    buscaItensNome();
                     break;
                 case 5:
                     // Implementar troca de itens
@@ -70,7 +71,7 @@ public class Aplicacao {
                     // Implementar verificação da raridade de um item
                     break;
                 case 11:
-                    // Implementar cadastro de item
+                    adicionarItem();
                     break;
                 case 12:
                     selecionarPropostaTroca();
@@ -91,9 +92,11 @@ public class Aplicacao {
 
         System.out.println("Digite seu nome: ");
         nome = sc.nextLine();
+        sc.next();
 
         System.out.println("Digite seu email: ");
         email = sc.nextLine();
+        sc.next();
 
         boolean pinValido = false;
         while (!pinValido) {
@@ -139,7 +142,7 @@ public class Aplicacao {
             sc.nextLine();
 
             Item item = new Item(nomeItem, descricao, tipo, preco);
-            cadastroItem.addItemAoJogador(item, pin);
+            cadastroItem.addItemJogador(item, pin);
             System.out.println("Item adicionado com sucesso!");
         } else {
             System.out.println("Jogador não encontrado. Faça o login primeiro!");
@@ -172,7 +175,7 @@ public class Aplicacao {
         }
     }
 
-    private static void selecionarPropostaTroca() {
+    public void selecionarPropostaTroca() {
 
         if (propostas.isEmpty()) {
             System.out.println("Nenhuma proposta de troca disponível.");
@@ -202,6 +205,13 @@ public class Aplicacao {
         } else {
             System.out.println("Escolha inválida.");
         }
+    }
+
+    public void buscaItensNome(){
+        String nomeItem;
+        System.out.println("Digite o nome do item a ser procurado. ");
+        nomeItem = sc.nextLine();
+        cadastroItem.buscarItemPorNome(nomeItem);
     }
 
 }

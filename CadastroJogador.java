@@ -48,9 +48,9 @@ public class CadastroJogador {
         return false;
     }
 
-    public Jogador buscarJogadorPorPin(String email) {
+    public Jogador buscarJogadorPorPin(int pin) {
         for (Jogador jogador : jogadores) {
-            if (jogador.getEmail().equals(email)) {
+            if (jogador.getPin() == (pin)) {
                 return jogador;
             }
         }

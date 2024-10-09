@@ -7,13 +7,17 @@ public class Aplicacao {
     public static final String VERDE = "\u001B[32m";
     public static final String RESET = "\u001B[0m";
     private static List<PropostaTroca> propostas = new ArrayList<>();
-    private static Scanner scanner = new Scanner(System.in);
-    private Jogador jogador;
+    private static Scanner sc = new Scanner(System.in);
     private CadastroJogador cadastroJogador;
     private CadastroItem cadastroItem;
 
-    public void exibirMenu() {
-        Scanner scanner = new Scanner(System.in);
+    public Aplicacao(){
+        cadastroJogador = new CadastroJogador();
+        cadastroItem = new CadastroItem();
+    }
+
+    public void executar() {
+
         int opcao;
 
         do {
@@ -32,7 +36,7 @@ public class Aplicacao {
             System.out.println(VERDE + "[12] Selecionar e aceitar proposta de troca" + RESET);
             System.out.println(VERDE + "[0] Sair" + RESET);
 
-            opcao = scanner.nextInt();
+            opcao = sc.nextInt();
 
             switch (opcao) {
                 case 1:
@@ -86,15 +90,15 @@ public class Aplicacao {
         int pin = 0;
 
         System.out.println("Digite seu nome: ");
-        nome = scanner.nextLine();
+        nome = sc.nextLine();
 
         System.out.println("Digite seu email: ");
-        email = scanner.nextLine();
+        email = sc.nextLine();
 
         boolean pinValido = false;
         while (!pinValido) {
             System.out.println("Digite seu pin (deve conter exatamente 6 números): ");
-            pin = scanner.nextInt();
+            pin = sc.nextInt();
 
 
             if (String.valueOf(pin).length() == 6) {
@@ -116,23 +120,23 @@ public class Aplicacao {
         String descricao;
         String tipo;
         double preco;
-        String pin;
+        int pin;
 
         System.out.println("Digite o seu pin: ");
-        pin = scanner.nextLine();
+        pin = sc.nextInt();
 
         Jogador jogador = cadastroJogador.buscarJogadorPorPin(pin);
 
         if (jogador != null) {
             System.out.println("Digite o nome do item: ");
-            nomeItem = scanner.nextLine();
+            nomeItem = sc.nextLine();
             System.out.println("Digite a descrição do item: ");
-            descricao = scanner.nextLine();
+            descricao = sc.nextLine();
             System.out.println("Digite a tipo do item: ");
-            tipo = scanner.nextLine();
+            tipo = sc.nextLine();
             System.out.println("Digite o preço do item: ");
-            preco = scanner.nextDouble();
-            scanner.nextLine();
+            preco = sc.nextDouble();
+            sc.nextLine();
 
             Item item = new Item(nomeItem, descricao, tipo, preco);
             cadastroItem.addItemAoJogador(item, pin);
@@ -144,16 +148,16 @@ public class Aplicacao {
 
     public void removerItem() {
         String nomeItem;
-        String pin;
+         int pin;
 
         System.out.println("Digite o seu pin para remover o item: ");
-        pin = scanner.nextLine();
+        pin = sc.nextInt();
 
 
         Jogador jogador = cadastroJogador.buscarJogadorPorPin(pin);
         if (jogador != null) {
             System.out.println("Digite o nome do item a ser removido: ");
-            nomeItem = scanner.nextLine();
+            nomeItem = sc.nextLine();
 
             Item item = cadastroItem.buscarItemPorNome(nomeItem);
 
@@ -180,14 +184,14 @@ public class Aplicacao {
             System.out.println("[" + i + "] " + propostas.get(i).getDescricao());
         }
 
-        int escolha = scanner.nextInt();
+        int escolha = sc.nextInt();
         if (escolha >= 0 && escolha < propostas.size()) {
             PropostaTroca proposta = propostas.get(escolha);
             System.out.println("Detalhes da proposta: ");
             System.out.println(proposta);
 
             System.out.println("Deseja aceitar esta proposta? (1 - Sim / 2 - Não)");
-            int resposta = scanner.nextInt();
+            int resposta = sc.nextInt();
 
             if (resposta == 1) {
                 System.out.println("Proposta aceita.");

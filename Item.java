@@ -7,16 +7,32 @@ public class Item {
     private String tipo;
     private double preco;
     private Raridade raridade;
+    private String valor;
 
     //Contrutor
-    public Item(String nome, String descricao, String tipo, double preco, Raridade raridade) {
+    public Item(String nome, String descricao, String tipo, double preco, String valor, Raridade raridade) {
         Random random = new Random();
         this.id = random.nextInt(10000);
         this.nome = nome;
         this.descricao = descricao;
         this.tipo = tipo;
         this.preco = preco;
+        this.valor = valor;
         this.raridade = raridade;
+    }
+
+    public String verificaValor() {
+
+        if(this.valor.equals("") && this.preco < 100) {
+            valor = "Valor barato";
+        }else if(this.valor.equals("") && this.preco >= 100 && this.preco < 200) {
+            valor = "Valor aceitável";
+        }else if(this.valor.equals("") && this.preco >= 200) {
+            valor = "Valor caro";
+        }else{
+            valor = "Valor invalido";
+        }
+        return valor;
     }
 
     //Getters
@@ -38,6 +54,10 @@ public class Item {
 
     public double getPreco() {
         return preco;
+    }
+
+    public String getValor() {
+        return valor;
     }
 
     public Raridade getRaridade() {

@@ -104,7 +104,7 @@ public class Aplicacao {
                     buscaItensId();
                     break;
                 case 4:
-                    // Implementar verificação do valor de um item
+                    verificaValor();
                     break;
                 case 5:
                     // Implementar verificação da raridade de um item
@@ -199,6 +199,7 @@ public class Aplicacao {
         String nomeItem;
         String descricao;
         String tipo;
+        String valor = "";
         Raridade raridade;
         double preco;
         int pin;
@@ -222,6 +223,7 @@ public class Aplicacao {
             System.out.println("Digite o preço do item: ");
             preco = sc.nextDouble();
             sc.nextLine();
+
 
             System.out.println("Escolha a raridade do item: ");
             System.out.println("1- Comum");
@@ -249,7 +251,7 @@ public class Aplicacao {
             }
 
 
-            Item item = new Item(nomeItem, descricao, tipo, preco, raridade);
+            Item item = new Item(nomeItem, descricao, tipo, preco, valor, raridade);
 
 
             jogador.adicionarItem(item);
@@ -366,6 +368,25 @@ public class Aplicacao {
         }
     }
 
+    public void verificaValor(){
+        int pin;
+        int id;
+        System.out.println("Digite o seu pin: ");
+        pin = sc.nextInt();
+        if(cadastroJogador.buscarJogadorPorPin(pin) != null) {
+            System.out.println("Digite o id do item a ser procurado: ");
+            id = sc.nextInt();
+            if (cadastroItem.buscarItemPorid(id) != null){
+            cadastroItem.verificaValor(id);
+            return;
+            }else{
+                System.out.println("Item não encontrado.");
+            }
+        }else{
+            System.out.println("Jogador não encontrado.");
+        }
+    }
+
     /** Menu */
     /** Jogadores */
     /**
@@ -387,15 +408,15 @@ public class Aplicacao {
         /**
          * nome, descricao, tipo, preco
          */
-        Item i1 = new Item("Katana", "Katana do Leonardo - Tartarugas Ninjas (Item de evento). Voltado a confrontos de curtas distâncias, a Katana tem uma vantagem por ser leve, podendo proporcionar ataques rápidos", "Arma Branca", 250.00, Raridade.LENDARIO);
-        Item i2 = new Item("Foice", "Arma branca que consegue dar ataques de curtas a médias distâncias, porém seu ataque será lento", "Arma Branca", 225.50, Raridade.RARO);
-        Item i3 = new Item("Arco de longa distância", "Arco feito para confronto de longas distâncias. Contém alto dano, porém demora para recarregar", "Arma a Distância", 100.00, Raridade.RARO);
-        Item i4 = new Item("Arco padrão", "Arco padrão", "Arma de Longa Distância", 150.00, Raridade.COMUM);
-        Item i5 = new Item("Arco de disparo rápido", "Arco feito para confrontos de médias distâncias. Contém alto poder de disparo, porém não tem tanto alcance", "Arma a Distância", 200.00, Raridade.RARO);
-        Item i6 = new Item("Armadura", "Feita de couro, por mais leve que seja, ela não suporta tanto ataques", "Proteção", 125.00, Raridade.RARO);
-        Item i7 = new Item("Armadura", "Feita com ferro, suporta ataques pesados, porém o jogador perde velocidade", "Proteção", 200.00, Raridade.EPICO);
-        Item i8 = new Item("Escudo", "Feito com madeira e ferro, ele consegue resistir ataques de curta e longas distâncias", "Proteção", 75.50, Raridade.COMUM);
-        Item i9 = new Item("Flecha", "Item disparado pelo arco", "Ferramenta", 50.00, Raridade.COMUM);
+        Item i1 = new Item("Katana", "Katana do Leonardo - Tartarugas Ninjas (Item de evento). Voltado a confrontos de curtas distâncias, a Katana tem uma vantagem por ser leve, podendo proporcionar ataques rápidos", "Arma Branca", 250.00, "Valor caro", Raridade.LENDARIO);
+        Item i2 = new Item("Foice", "Arma branca que consegue dar ataques de curtas a médias distâncias, porém seu ataque será lento", "Arma Branca", 225.50, "Valor caro", Raridade.RARO);
+        Item i3 = new Item("Arco de longa distância", "Arco feito para confronto de longas distâncias. Contém alto dano, porém demora para recarregar", "Arma a Distância", 100.00, "Valor aceitável", Raridade.RARO);
+        Item i4 = new Item("Arco padrão", "Arco padrão", "Arma de Longa Distância", 150.00, "Valor aceitável", Raridade.COMUM);
+        Item i5 = new Item("Arco de disparo rápido", "Arco feito para confrontos de médias distâncias. Contém alto poder de disparo, porém não tem tanto alcance", "Arma a Distância", 200.00, "Valor caro", Raridade.RARO);
+        Item i6 = new Item("Armadura", "Feita de couro, por mais leve que seja, ela não suporta tanto ataques", "Proteção", 125.00,"Valor aceitável" , Raridade.RARO);
+        Item i7 = new Item("Armadura", "Feita com ferro, suporta ataques pesados, porém o jogador perde velocidade", "Proteção", 200.00, "Valor caro", Raridade.EPICO);
+        Item i8 = new Item("Escudo", "Feito com madeira e ferro, ele consegue resistir ataques de curta e longas distâncias", "Proteção", 75.50, "Valor barato", Raridade.COMUM);
+        Item i9 = new Item("Flecha", "Item disparado pelo arco", "Ferramenta", 50.00, "Valor barato", Raridade.COMUM);
 
         cadastroItem.addItemJogador(i1, "rcarvalho@gmail.com");
         cadastroItem.addItemJogador(i2, "gsilva@gmail.com");

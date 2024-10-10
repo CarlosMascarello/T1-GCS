@@ -64,5 +64,19 @@ public class CadastroItem {
             System.out.println("Jogador não encontrado.");
         }
     }
+
+    public void listarItensOutroJogador(String nome) {
+        for (Jogador j : cadastro.getJogadores()) {
+            if (j.getNome().equalsIgnoreCase(nome)) {
+                System.out.println("Itens do jogador "+nome + ":\n");
+                for (Item item : j.getItens()) {
+                    System.out.println(item.toString());
+                }
+                return;
+            }
+        }
+        System.out.println("Jogador não encontrado.");
+    }
 }
+
 

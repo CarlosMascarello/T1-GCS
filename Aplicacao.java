@@ -32,13 +32,17 @@ public class Aplicacao {
             sc.nextLine();
             switch (opcao) {
                 case 1:
-                    // Implementar logar
+                    entrarSistema();
+                    executar();
                     break;
                 case 2:
                     registrarJogador();
                     break;
                 case 0:
                     System.out.println("Saindo do sistema...");
+                    break;
+                case 99:
+                    easterEgg();
                     break;
                 default:
                     System.out.println("ERRO.");
@@ -64,9 +68,6 @@ public class Aplicacao {
                         break;
                     case 0:
                         System.out.println("Saindo do sistema...");
-                        break;
-                    case 99:
-                        easterEgg();
                         break;
                     default:
                         System.out.println("Opção inválida. Tente novamente.");
@@ -94,7 +95,7 @@ public class Aplicacao {
                     listarItems();
                     break;
                 case 2:
-                    // Implementar visualização dos itens de outros jogadores
+                    mostrarItensOutroJogador();
                     break;
                 case 3:
                     buscaItensId();
@@ -331,6 +332,34 @@ public class Aplicacao {
 
         cadastroItem.listarItems(pin);
         mostrarHUDItens();
+    }
+
+    public void mostrarItensOutroJogador(){
+        String nome;
+
+        System.out.println("Digite o nome do outro jogador: ");
+        nome = sc.nextLine();
+
+        cadastroItem.listarItensOutroJogador(nome);
+        mostrarHUDItens();
+    }
+
+    public void entrarSistema() {
+        int pin;
+        String email;
+
+        System.out.println("Digite seu e-mail: ");
+        email = sc.nextLine();
+
+        System.out.println("Digite seu pín: ");
+        pin = sc.nextInt();
+        sc.nextLine();
+
+        if (cadastroJogador.entrarSistema(email, pin)) {
+            System.out.println("Login feito com sucesso!");
+        } else {
+            System.out.println("Dados incorretos ou faça o cadastro primeiro!");
+        }
     }
 
     /** Menu */

@@ -6,7 +6,7 @@ public class Jogador {
     private int pin;
     private ArrayList<Item> itens;
 
-    //Contrutor
+    //Construtor
     public Jogador(String nome, String email, int pin) {
         this.nome = nome;
         this.email = email;

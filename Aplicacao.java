@@ -17,11 +17,14 @@ public class Aplicacao {
         cadastroItem = new CadastroItem(cadastroJogador);
     }
 
+    /**
+     * Inicio do HUD da Aplicação
+     */
     public void executar() {
 
         int opcao;
 
-        do {
+        while (true) {
             System.out.println(VERDE + "### Bem Vindo ###" + RESET);
             System.out.println(VERDE + "DIGITE A OPÇÃO DESEJADA" + RESET);
             System.out.println(VERDE + "[1] Login" + RESET);
@@ -30,24 +33,24 @@ public class Aplicacao {
 
             opcao = sc.nextInt();
             sc.nextLine();
-            switch (opcao) {
-                case 1:
-                    entrarSistema();
-                    executar();
-                    break;
-                case 2:
-                    registrarJogador();
-                    break;
-                case 0:
-                    System.out.println("Saindo do sistema...");
-                    break;
-                case 99:
-                    easterEgg();
-                    break;
-                default:
-                    System.out.println("ERRO.");
+            if (opcao == 0) {
+                System.out.println("Saindo do sistema...");
+                break;
+            } else {
+                switch (opcao) {
+                    case 1:
+                        entrarSistema();
+                        executar();
+                        break;
+                    case 2:
+                        registrarJogador();
+                        break;
+                    default:
+                        System.out.println("Opção inválida. Tente novamente.");
+                }
             }
-            while (opcao != 0) {
+
+            while (true) {
                 System.out.println(VERDE + "[1] Itens" + RESET);
                 System.out.println(VERDE + "[2] Efetuar trocas" + RESET);
                 System.out.println(VERDE + "[3] Estatíticas Gerais" + RESET);
@@ -55,71 +58,73 @@ public class Aplicacao {
                 System.out.println(VERDE + "[0] Sair" + RESET);
                 opcao = sc.nextInt();
                 sc.nextLine();
+                if (opcao == 0) {
+                    System.out.println("Saindo do sistema...");
+                    break;
+                } else {
+                    switch (opcao) {
+                        case 1:
+                            mostrarHUDItens();
+                            break;
+                        case 2:
+                            mostrarHUDTrocas();
+                            break;
+                        case 3:
+                            mostrarEstatisticasGerais();
+                            break;
+                        case 99:
+                            easterEgg();
+                            break;
+                        default:
+                            System.out.println("Opção inválida. Tente novamente.");
+                    }
+                }
 
+            }
+        }
+    }
+
+    public void mostrarHUDItens() {
+        while (true) {
+            System.out.println(VERDE + "[1] Ver seus itens" + RESET);
+            System.out.println(VERDE + "[2] Ver itens dos jogadores" + RESET);
+            System.out.println(VERDE + "[3] Buscar itens pelo id" + RESET);
+            System.out.println(VERDE + "[4] Verificar valor de item (barato/médio/caro)" + RESET);
+            System.out.println(VERDE + "[5] Verificar raridade de item (comum/raro/épico/lendário)" + RESET);
+            System.out.println(VERDE + "[6] Cadastrar item" + RESET);
+            System.out.println(VERDE + "[7] Excluir Itens" + RESET);
+            System.out.println(VERDE + "[0] Sair" + RESET);
+            int opcao = sc.nextInt();
+            sc.nextLine();
+            if (opcao == 0) {
+                System.out.println("Volta ao sistema...");
+                break;
+            } else {
                 switch (opcao) {
                     case 1:
-                        mostrarHUDItens();
+                        listarItems();
                         break;
                     case 2:
-                        mostrarHUDTrocas();
+                        mostrarItensOutroJogador();
                         break;
                     case 3:
-                        mostrarEstatisticasGerais();
+                        buscaItensId();
                         break;
-                    case 0:
-                        System.out.println("Saindo do sistema...");
+                    case 4:
+                        // Implementar verificação do valor de um item
                         break;
-                    case 99:
-                        easterEgg();
+                    case 5:
+                        // Implementar verificação da raridade de um item
+                        break;
+                    case 6:
+                        adicionarItem();
+                        break;
+                    case 7:
+                        removerItem();
                         break;
                     default:
                         System.out.println("Opção inválida. Tente novamente.");
                 }
-
-            }
-        } while (opcao != 0);
-    }
-
-    public void mostrarHUDItens() {
-        System.out.println(VERDE + "[1] Ver seus itens" + RESET);
-        System.out.println(VERDE + "[2] Ver itens dos jogadores" + RESET);
-        System.out.println(VERDE + "[3] Buscar itens pelo id" + RESET);
-        System.out.println(VERDE + "[4] Verificar valor de item (barato/médio/caro)" + RESET);
-        System.out.println(VERDE + "[5] Verificar raridade de item (comum/raro/épico/lendário)" + RESET);
-        System.out.println(VERDE + "[6] Cadastrar item" + RESET);
-        System.out.println(VERDE + "[7] Excluir Itens" + RESET);
-        System.out.println(VERDE + "[0] Sair" + RESET);
-
-        int opcao = sc.nextInt();
-        sc.nextLine();
-        while (opcao != 0) {
-            switch (opcao) {
-                case 1:
-                    listarItems();
-                    break;
-                case 2:
-                    mostrarItensOutroJogador();
-                    break;
-                case 3:
-                    buscaItensId();
-                    break;
-                case 4:
-                    // Implementar verificação do valor de um item
-                    break;
-                case 5:
-                    // Implementar verificação da raridade de um item
-                    break;
-                case 6:
-                    adicionarItem();
-                    break;
-                case 7:
-                    removerItem();
-                    break;
-                case 0:
-                    System.out.println("Volta ao sistema...");
-                    break;
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
             }
         }
     }
@@ -136,13 +141,13 @@ public class Aplicacao {
         while (opcao != 0) {
             switch (opcao) {
                 case 1:
-                    // Implementar troca de itens
+                    criarPropostaTroca();
                     break;
                 case 2:
-                    // Implementar detalhe?
+                    mostrarDetalhesTroca();
                     break;
                 case 3:
-                    // Implementar visualização de propostas de troca
+                    mostrarTrocasOcorridas();
                     break;
                 case 4:
                     selecionarPropostaTroca();
@@ -162,38 +167,10 @@ public class Aplicacao {
         // implementar
     }
 
-    public void registrarJogador() {
-        String nome;
-        String email;
-        int pin = 0;
 
-        System.out.println("Digite seu nome: ");
-        nome = sc.nextLine();
-
-
-        System.out.println("Digite seu email: ");
-        email = sc.nextLine();
-
-
-        boolean pinValido = false;
-        while (!pinValido) {
-            System.out.println("Digite seu pin (deve conter exatamente 6 números): ");
-            pin = sc.nextInt();
-            sc.nextLine();
-
-            if (String.valueOf(pin).length() == 6) {
-                pinValido = true;
-
-            } else {
-                System.out.println("Pin inválido! O pin deve conter exatamente 6 números.");
-            }
-        }
-
-        Jogador jogador = new Jogador(nome, email, pin);
-        if (cadastroJogador.cadastroJogador(jogador)) {
-            System.out.println("Jogador Cadastrado com sucesso!");
-        }
-    }
+    /**
+     * Codigos referentes aos itens
+     */
 
     public void adicionarItem() {
         String nomeItem;
@@ -288,6 +265,66 @@ public class Aplicacao {
         mostrarHUDItens();
     }
 
+    public void buscaItensId() {
+        int id;
+        System.out.println("Digite o nome do item a ser procurado. ");
+        id = sc.nextInt();
+        cadastroItem.buscarItemPorid(id);
+    }
+
+    public void listarItems() {
+        int pin;
+
+        System.out.println("Digite seu pin: ");
+        pin = sc.nextInt();
+
+        cadastroItem.listarItems(pin);
+        mostrarHUDItens();
+    }
+
+    public void mostrarItensOutroJogador() {
+        String nome;
+
+        System.out.println("Digite o nome do outro jogador: ");
+        nome = sc.nextLine();
+
+        cadastroItem.listarItensOutroJogador(nome);
+        mostrarHUDItens();
+    }
+
+    /**
+     * Codigos referentes as trocas
+     */
+
+    public void criarPropostaTroca() {
+        System.out.println("Digite o seu nome");
+        String nomeProp = sc.nextLine();
+        sc.nextLine();
+
+        System.out.println("Digite o ID do item que deseja enviar");
+        int idProp = sc.nextInt();
+        sc.nextLine();
+
+        System.out.println("Digite o nome do usuário que tem o item que desejas");
+        String nomeRequi = sc.nextLine();
+        sc.nextLine();
+
+        System.out.println("Digite o ID do item que deseja receber");
+        int idRequi = sc.nextInt();
+        sc.nextLine();
+
+        CadastroJogador cd = null;
+        CadastroItem ci = null;
+        if (cd != null && ci != null) {
+            Jogador j1 = cd.buscarJogadorPorNome(nomeProp);
+            Jogador j2 = cd.buscarJogadorPorNome(nomeRequi);
+            Item i1 = ci.buscarItemPorid(idProp);
+            Item i2 = ci.buscarItemPorid(idRequi);
+            PropostaTroca propostaTroca = new PropostaTroca(j1, j2, i1, i2);
+        } else
+            System.out.println("Erro de digitação encontrado! Tente novamnete");
+    }
+
     public void selecionarPropostaTroca() {
 
         if (propostas.isEmpty()) {
@@ -311,9 +348,10 @@ public class Aplicacao {
 
             if (resposta == 1) {
                 System.out.println("Proposta aceita.");
-                propostas.remove(proposta);
-            } else {
+                proposta.aceitarProposta();
+            } else if (resposta == 2) {
                 System.out.println("Proposta rejeitada.");
+                proposta.recusarProposta();
             }
         } else {
             System.out.println("Escolha inválida.");
@@ -321,32 +359,32 @@ public class Aplicacao {
         mostrarHUDTrocas();
     }
 
-    public void buscaItensId() {
-        int id;
-        System.out.println("Digite o nome do item a ser procurado. ");
-        id = sc.nextInt();
-        cadastroItem.buscarItemPorid(id);
+    public String mostrarDetalhesTroca() {
+        System.out.println("Qual o id da proposta?");
+        int aux = sc.nextInt();
+        for (PropostaTroca proposta : propostas) {
+            if (propostas.get(proposta.getId()).getId() == aux) {
+                return propostas.get(proposta.getId()).getDescricao();
+            } else {
+                System.out.println("ID não localizado!");
+            }
+        }
+
+        mostrarHUDTrocas();
+        return null;
     }
 
-    public void listarItems() {
-        int pin;
+    public String mostrarTrocasOcorridas() {
+        for (PropostaTroca proposta : propostas) {
+            System.out.println(proposta.toString());
+        }
 
-        System.out.println("Digite seu pin: ");
-        pin = sc.nextInt();
-
-        cadastroItem.listarItems(pin);
-        mostrarHUDItens();
+        return null;
     }
 
-    public void mostrarItensOutroJogador(){
-        String nome;
-
-        System.out.println("Digite o nome do outro jogador: ");
-        nome = sc.nextLine();
-
-        cadastroItem.listarItensOutroJogador(nome);
-        mostrarHUDItens();
-    }
+    /**
+     * Codigo referente ao login
+     */
 
     public void entrarSistema() {
         int pin;
@@ -366,8 +404,41 @@ public class Aplicacao {
         }
     }
 
-    /** Menu */
-    /** Jogadores */
+    public void registrarJogador() {
+        String nome;
+        String email;
+        int pin = 0;
+
+        System.out.println("Digite seu nome: ");
+        nome = sc.nextLine();
+
+
+        System.out.println("Digite seu email: ");
+        email = sc.nextLine();
+
+
+        boolean pinValido = false;
+        while (!pinValido) {
+            System.out.println("Digite seu pin (deve conter exatamente 6 números): ");
+            pin = sc.nextInt();
+            sc.nextLine();
+
+            if (String.valueOf(pin).length() == 6) {
+                pinValido = true;
+
+            } else {
+                System.out.println("Pin inválido! O pin deve conter exatamente 6 números.");
+            }
+        }
+
+        Jogador jogador = new Jogador(nome, email, pin);
+        if (cadastroJogador.cadastroJogador(jogador)) {
+            System.out.println("Jogador Cadastrado com sucesso!");
+        }
+    }
+
+/** Menu */
+/** Jogadores */
     /**
      * nome, email, pin
      */

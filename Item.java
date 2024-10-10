@@ -8,7 +8,7 @@ public class Item {
     private double preco;
     private Raridade raridade;
 
-    //Contrutor
+    //Construtor
     public Item(String nome, String descricao, String tipo, double preco, Raridade raridade) {
         Random random = new Random();
         this.id = random.nextInt(10000);

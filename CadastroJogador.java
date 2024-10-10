@@ -70,6 +70,15 @@ public class CadastroJogador {
         return null;
     }
 
+    public Jogador buscarJogadorPorNome(String nome) {
+        for (Jogador jogador : jogadores) {
+            if (jogador.getNome().equals(nome)) {
+                return jogador;
+            }
+        }
+        return null;
+    }
+
     public void listarJogadores() {
         if (jogadores.isEmpty()) {
             System.out.println("Nenhum jogador cadastrado.");

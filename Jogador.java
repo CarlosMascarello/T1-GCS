@@ -3,18 +3,11 @@ import java.util.ArrayList;
 public class Jogador {
     private String nome;
     private String email;
-
     private int pin;
     private ArrayList<Item> itens;
-    private Item item;
-
-    public Item getItem() {
-        return item;
-    }
-
 
     //Contrutor
-    public Jogador(String nome, String email, String pin) {
+    public Jogador(String nome, String email, int pin) {
         this.nome = nome;
         this.email = email;
         this.pin = pin;
@@ -38,11 +31,11 @@ public class Jogador {
         this.email = email;
     }
 
-    public String getPin() {
+    public int getPin() {
         return pin;
     }
 
-    public void setPin(String pin) {
+    public void setPin(int pin) {
         this.pin = pin;
     }
 

@@ -1,55 +1,35 @@
-
-import java.util.ArrayList;
-
-/**
- * Classe CadastroItem representa o cadastro de um novo item ao jogador
- */
 public class CadastroItem {
-    private CadastroJogador cadastroJogador;
+    private CadastroJogador cadastro; // Referência ao CadastroJogador
 
-
-    public CadastroItem() {
-        this.cadastroJogador = new CadastroJogador();
-
+    // Construtor que recebe uma instância de CadastroJogador
+    public CadastroItem(CadastroJogador cadastro) {
+        this.cadastro = cadastro; // Usa a instância existente de CadastroJogador
     }
-
-
-    public CadastroJogador getCadastroJogador() {
-        return cadastroJogador;
-    }
-
 
     public void addItemJogador(Item item, int pin) {
-        boolean jogadorExiste = false;
-        for (Jogador j : cadastroJogador.getJogadores()) {
-            if (j.getPin() == pin) {
-                jogadorExiste = true;
-                if (cadastroJogador.getJogadores() != null) {
-                    cadastroJogador.getJogador().adicionarItem(item);
-                } else {
-                    System.out.println("Jogador não encontrado.");
-                }
-            }
+        Jogador jogador = cadastro.buscarJogadorPorPin(pin);
+
+        if (jogador != null) {
+            jogador.adicionarItem(item);
+            System.out.println("Item adicionado ao jogador.");
+        } else {
+            System.out.println("Jogador não encontrado.");
         }
     }
 
-    public void removeItemJogador(Item item, int pin) {
-        boolean jogadorExiste = false;
-        for (Jogador j : cadastroJogador.getJogadores()) {
-            if (j.getPin() == pin) {
-                jogadorExiste = true;
-                if (cadastroJogador.getJogadores() != null) {
-                    cadastroJogador.getJogador().removerItem(item);
-                } else {
-                    System.out.println("Jogador não encontrado.");
-                }
-            }
+    public void removeItem(Item item, int pin) {
+        Jogador jogador = cadastro.buscarJogadorPorPin(pin);
+
+        if (jogador != null) {
+            jogador.removerItem(item);
+            System.out.println("Item removido do jogador.");
+        } else {
+            System.out.println("Jogador não encontrado.");
         }
     }
-
 
     public Item buscarItemPorNome(String nomeItem) {
-        for (Jogador j : cadastroJogador.getJogadores()) {
+        for (Jogador j : cadastro.getJogadores()) {
             for (Item item : j.getItens()) {
                 if (item.getNome().equals(nomeItem)) {
                     return item;
@@ -59,19 +39,19 @@ public class CadastroItem {
         return null;
     }
 
-    public Item listarItensJogador(int pin) {
-        for (Jogador j : cadastroJogador.getJogadores()) {
-            if (j.getPin() == pin) {
-                for (Item item : j.getItens()) {
-                    return j.getItem();
-                }
+    public void listarItems(int pin) {
+        Jogador jogador = cadastro.buscarJogadorPorPin(pin);  // Busca o jogador pelo pin
+
+        if (jogador != null) {
+            if (jogador.getItens().isEmpty()) {  // Verifica se o jogador tem itens
+                System.out.println("Nenhum item encontrado para este jogador.");
             } else {
-                System.out.println("Jogador não encontrado.");
+                for (Item item : jogador.getItens()) {
+                    System.out.println(item);  // Exibe cada item
+                }
             }
-
-
+        } else {
+            System.out.println("Jogador não encontrado.");
         }
-        return null;
     }
 }
-

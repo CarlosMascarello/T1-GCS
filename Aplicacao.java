@@ -14,7 +14,7 @@ public class Aplicacao {
 
     public Aplicacao() {
         cadastroJogador = new CadastroJogador();
-        cadastroItem = new CadastroItem();
+        cadastroItem = new CadastroItem(cadastroJogador);
     }
 
     /** Menu */
@@ -88,7 +88,7 @@ public class Aplicacao {
                     selecionarPropostaTroca();
                     break;
                 case 8:
-                    exibirEstatisticasGerais();
+
                     break;
                 case 9:
                     // Implementar verificação do valor de um item
@@ -106,7 +106,7 @@ public class Aplicacao {
                     cadastroJogador.listarJogadores();
                     break;
                 case 14:
-                    listaItensJogador();
+                    listarItems();
                     break;
                 case 0:
                     System.out.println("Saindo do sistema...");
@@ -149,7 +149,6 @@ public class Aplicacao {
         Jogador jogador = new Jogador(nome, email, pin);
         if (cadastroJogador.cadastroJogador(jogador)) {
             System.out.println("Jogador Cadastrado com sucesso!");
-            //esta funcionando
         }
     }
 
@@ -162,25 +161,31 @@ public class Aplicacao {
 
         System.out.println("Digite o seu pin: ");
         pin = sc.nextInt();
+        sc.nextLine();
 
         Jogador jogador = cadastroJogador.buscarJogadorPorPin(pin);
 
         if (jogador != null) {
             System.out.println("Digite o nome do item: ");
             nomeItem = sc.nextLine();
-            sc.next();
+
             System.out.println("Digite a descrição do item: ");
             descricao = sc.nextLine();
-            sc.nextLine();
-            System.out.println("Digite a tipo do item: ");
+
+            System.out.println("Digite o tipo do item: ");
             tipo = sc.nextLine();
+
             System.out.println("Digite o preço do item: ");
             preco = sc.nextDouble();
             sc.nextLine();
 
+
             Item item = new Item(nomeItem, descricao, tipo, preco);
-            cadastroItem.addItemJogador(item, pin);
-            System.out.println("Item adicionado com sucesso!");
+
+
+            jogador.adicionarItem(item);
+
+            System.out.println("Item adicionado com sucesso ao jogador " + jogador.getNome() + "!");
         } else {
             System.out.println("Jogador não encontrado. Faça o login primeiro!");
         }
@@ -202,7 +207,7 @@ public class Aplicacao {
             Item item = cadastroItem.buscarItemPorNome(nomeItem);
 
             if (item != null) {
-                cadastroItem.removeItemJogador(item, pin);
+                cadastroItem.removeItem(item, pin);
                 System.out.println("Item removido com sucesso!");
             } else {
                 System.out.println("Item não encontrado no cadastro.");
@@ -251,21 +256,13 @@ public class Aplicacao {
         cadastroItem.buscarItemPorNome(nomeItem);
     }
 
-    public void listaItensJogador() {
-        System.out.println("Digite seu pin: ");
-        int pin = sc.nextInt();
-        System.out.println(cadastroItem.listarItensJogador(pin));
-       // System.out.println(cadastroJogador.getItem());
-    }
-    public void exibirEstatisticasGerais() {
-        int totalJogadores = cadastroJogador.getTotalJogadores();
-        int totalItens = cadastroItem.getTotalItens();
-        int totalPropostas = propostas.size();
+    public void listarItems() {
+        int pin;
 
-        System.out.println("Estatísticas gerais:");
-        System.out.println("Total de jogadores: " + totalJogadores);
-        System.out.println("Total de itens: " + totalItens);
-        System.out.println("Total de propostas de troca: " + totalPropostas);
+        System.out.println("Digite seu pin: ");
+        pin = sc.nextInt();
+
+        cadastroItem.listarItems(pin);
     }
 
 }

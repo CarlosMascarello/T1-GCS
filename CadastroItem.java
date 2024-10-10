@@ -3,7 +3,7 @@ public class CadastroItem {
 
     // Construtor que recebe uma instância de CadastroJogador
     public CadastroItem(CadastroJogador cadastro) {
-        this.cadastro = cadastro; // Usa a instância existente de CadastroJogador
+        this.cadastro = cadastro;
     }
 
     public void addItemJogador(Item item, int pin) {
@@ -22,16 +22,15 @@ public class CadastroItem {
 
         if (jogador != null) {
             jogador.removerItem(item);
-            System.out.println("Item removido do jogador.");
         } else {
             System.out.println("Jogador não encontrado.");
         }
     }
 
-    public Item buscarItemPorNome(String nomeItem) {
+    public Item buscarItemPorid(int id) {
         for (Jogador j : cadastro.getJogadores()) {
             for (Item item : j.getItens()) {
-                if (item.getNome().equals(nomeItem)) {
+                if (item.getId() == id) {
                     return item;
                 }
             }
@@ -40,14 +39,14 @@ public class CadastroItem {
     }
 
     public void listarItems(int pin) {
-        Jogador jogador = cadastro.buscarJogadorPorPin(pin);  // Busca o jogador pelo pin
+        Jogador jogador = cadastro.buscarJogadorPorPin(pin);
 
         if (jogador != null) {
-            if (jogador.getItens().isEmpty()) {  // Verifica se o jogador tem itens
+            if (jogador.getItens().isEmpty()) {
                 System.out.println("Nenhum item encontrado para este jogador.");
             } else {
                 for (Item item : jogador.getItens()) {
-                    System.out.println(item);  // Exibe cada item
+                    System.out.println(item);
                 }
             }
         } else {
@@ -55,3 +54,4 @@ public class CadastroItem {
         }
     }
 }
+

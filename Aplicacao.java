@@ -10,11 +10,12 @@ public class Aplicacao {
     private static Scanner sc = new Scanner(System.in);
     private CadastroJogador cadastroJogador;
     private CadastroItem cadastroItem;
-    private Jogador jogador;
+
 
     public Aplicacao() {
         cadastroJogador = new CadastroJogador();
         cadastroItem = new CadastroItem(cadastroJogador);
+
     }
 
     /** Menu */
@@ -60,7 +61,8 @@ public class Aplicacao {
             System.out.println(VERDE + "[9] Verificar valor de item (barato/médio/caro)" + RESET);
             System.out.println(VERDE + "[10] Verificar raridade de item (comum/raro/épico)" + RESET);
             System.out.println(VERDE + "[11] Cadastrar item" + RESET);
-            System.out.println(VERDE + "[12] Selecionar e aceitar proposta de troca" + RESET);
+            System.out.println(VERDE + "[12} Remover item" + RESET);
+            System.out.println(VERDE + "[13] Selecionar e aceitar proposta de troca" + RESET);
             System.out.println(VERDE + "[0] Sair" + RESET);
 
             opcao = sc.nextInt();
@@ -76,7 +78,7 @@ public class Aplicacao {
                     // Implementar visualização dos itens de outros jogadores
                     break;
                 case 4:
-                    buscaItensNome();
+                    buscaItensId();
                     break;
                 case 5:
                     // Implementar troca de itens
@@ -100,12 +102,15 @@ public class Aplicacao {
                     adicionarItem();
                     break;
                 case 12:
-                    selecionarPropostaTroca();
+                    removerItem();
                     break;
                 case 13:
-                    cadastroJogador.listarJogadores();
+                    selecionarPropostaTroca();
                     break;
                 case 14:
+                    cadastroJogador.listarJogadores();
+                    break;
+                case 15:
                     listarItems();
                     break;
                 case 0:
@@ -192,23 +197,21 @@ public class Aplicacao {
     }
 
     public void removerItem() {
-        String nomeItem;
+        int id;
         int pin;
 
         System.out.println("Digite o seu pin para remover o item: ");
         pin = sc.nextInt();
 
-
         Jogador jogador = cadastroJogador.buscarJogadorPorPin(pin);
         if (jogador != null) {
-            System.out.println("Digite o nome do item a ser removido: ");
-            nomeItem = sc.nextLine();
-
-            Item item = cadastroItem.buscarItemPorNome(nomeItem);
+            System.out.println("Digite o id do item a ser removido: ");
+            id = sc.nextInt();
+            Item item = cadastroItem.buscarItemPorid(id);
 
             if (item != null) {
                 cadastroItem.removeItem(item, pin);
-                System.out.println("Item removido com sucesso!");
+                System.out.println("Item: " + item.getNome() + " removido com sucesso!");
             } else {
                 System.out.println("Item não encontrado no cadastro.");
             }
@@ -249,11 +252,11 @@ public class Aplicacao {
         }
     }
 
-    public void buscaItensNome() {
-        String nomeItem;
+    public void buscaItensId() {
+        int id;
         System.out.println("Digite o nome do item a ser procurado. ");
-        nomeItem = sc.nextLine();
-        cadastroItem.buscarItemPorNome(nomeItem);
+        id = sc.nextInt();
+        cadastroItem.buscarItemPorid(id);
     }
 
     public void listarItems() {
@@ -264,5 +267,4 @@ public class Aplicacao {
 
         cadastroItem.listarItems(pin);
     }
-
 }

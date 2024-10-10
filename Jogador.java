@@ -53,11 +53,10 @@ public class Jogador {
 
     //toString
     public String toString() {
-        return "Jogador{" +
-                "nome='" + nome + '\'' +
-                ", email='" + email + '\'' +
-                ", pin=" + pin +
-                '}';
+        return "Jogador: \n" +
+                "nome: " + nome +
+                "\nemail: " + email +
+                "\npin: " + pin + '\n';
     }
 
 

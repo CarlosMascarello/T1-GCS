@@ -46,14 +46,13 @@ public class Item {
 
     //toString
     public String toString() {
-        return "Item{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", descricao='" + descricao + '\'' +
-                ", tipo='" + tipo + '\'' +
-                ", preco=" + preco + '\'' +
-                ", raridade='" + raridade + '\'' +
-                '}';
+        return "Item:" +
+                "Id: " + id +
+                "Nome: " + nome + '\n' +
+                "Descricao: " + descricao + '\n' +
+                "Tipo: " + tipo + '\n' +
+                "Preco: " + preco + '\n' +
+                "Raridade: " + raridade + '\n';
     }
 
     /** Cadastro de Itens */

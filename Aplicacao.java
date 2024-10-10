@@ -10,11 +10,13 @@ public class Aplicacao {
     private static Scanner sc = new Scanner(System.in);
     private CadastroJogador cadastroJogador;
     private CadastroItem cadastroItem;
-
+    private Estatisticas estatisticas;
 
     public Aplicacao() {
         cadastroJogador = new CadastroJogador();
         cadastroItem = new CadastroItem(cadastroJogador);
+        this.estatisticas = new Estatisticas(cadastroJogador, cadastroItem);
+
     }
 
     public void executar() {
@@ -64,7 +66,7 @@ public class Aplicacao {
                         mostrarHUDTrocas();
                         break;
                     case 3:
-                        mostrarEstatisticasGerais();
+                        estatisticas.mostrarEstatisticasGerais();
                         break;
                     case 0:
                         System.out.println("Saindo do sistema...");
@@ -158,8 +160,8 @@ public class Aplicacao {
         }
     }
 
-    public void mostrarEstatisticasGerais() {
-        // implementar
+    public void mostrarEstatisticasGerais(){
+
     }
 
     public void registrarJogador() {

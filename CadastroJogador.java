@@ -61,6 +61,15 @@ public class CadastroJogador {
         return null;
     }
 
+    public Jogador buscarJogadorPorEmail(String email) {
+        for (Jogador jogador : jogadores) {
+            if (jogador.getEmail().equals(email)) {
+                return jogador;
+            }
+        }
+        return null;
+    }
+
     public void listarJogadores() {
         if (jogadores.isEmpty()) {
             System.out.println("Nenhum jogador cadastrado.");

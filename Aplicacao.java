@@ -15,33 +15,7 @@ public class Aplicacao {
     public Aplicacao() {
         cadastroJogador = new CadastroJogador();
         cadastroItem = new CadastroItem(cadastroJogador);
-
     }
-
-    /** Menu */
-    /** Jogadores */
-    /**
-     * nome, email, pin
-     */
-    Jogador j1 = new Jogador("Ricardo Carvalho", "rcarvalho@gmail.com", 212121);
-    Jogador j2 = new Jogador("Gustavo Silva", "gsilva@gmail.com", 191919);
-    Jogador j3 = new Jogador("Roberto Cobre", "robertinhoC@gmail.com", 696969);
-    Jogador j4 = new Jogador("Júlia Pinheiro", "julipinheiro@gmail.com", 252525);
-    Jogador j5 = new Jogador("Gabriel Ribeiro", "gabrielr@gmail.com", 272727);
-
-    /** Itens */
-    /**
-     * nome, descricao, tipo, preco
-     */
-    Item i1 = new Item("Katana", "Katana do Leonardo - Tartarugas Ninjas (Item de evento). Voltado a confrontos de curtas distâncias, a Katana tem uma vantagem por ser leve, podendo proporcionar ataques rápidos", "Arma Branca", 250.00);
-    Item i2 = new Item("Foice", "Arma branca que consegue dar ataques de curtas a médias distâncias, porém seu ataque será lento", "Arma Branca", 225.50);
-    Item i3 = new Item("Arco de longa distância", "Arco feita para confronto de longas distâncias. Contém alto dano, porém demora para recarregar", "Arma a Distância", 100.00);
-    Item i4 = new Item("Arco padrão", "Arco padrão", "Arma de Longa Distância", 150.00);
-    Item i5 = new Item("Arco de disparo rápido", "Arco feito para confrontos de médias distâncias. Contém alto poder de disparo, porém não tem tanto alcance", "Arma a Distância", 200.00);
-    Item i6 = new Item("Armadura", "Feita de couro, por mais leve que seja, ela não suporta tanto ataques", "Proteção", 125.00);
-    Item i7 = new Item("Armadura", "Feita com ferro, suporta ataques pesados, porém o jogador perde velocidade", "Proteção", 200.00);
-    Item i8 = new Item("Escudo", "Feito com madeira e ferro, ele consegue resistir ataques de curta e longas distâncias", "Proteção", 75.50);
-    Item i9 = new Item("Flecha", "Item disparado pelo arco", "Ferramenta", 50.00);
 
     public void executar() {
 
@@ -59,10 +33,9 @@ public class Aplicacao {
             System.out.println(VERDE + "[7] Verificar propostas recebidas" + RESET);
             System.out.println(VERDE + "[8] Exibir estatísticas gerais" + RESET);
             System.out.println(VERDE + "[9] Verificar valor de item (barato/médio/caro)" + RESET);
-            System.out.println(VERDE + "[10] Verificar raridade de item (comum/raro/épico)" + RESET);
+            System.out.println(VERDE + "[10] Verificar raridade de item (comum/raro/épico/lendário)" + RESET);
             System.out.println(VERDE + "[11] Cadastrar item" + RESET);
-            System.out.println(VERDE + "[12} Remover item" + RESET);
-            System.out.println(VERDE + "[13] Selecionar e aceitar proposta de troca" + RESET);
+            System.out.println(VERDE + "[12] Selecionar e aceitar proposta de troca" + RESET);
             System.out.println(VERDE + "[0] Sair" + RESET);
 
             opcao = sc.nextInt();
@@ -113,6 +86,9 @@ public class Aplicacao {
                 case 15:
                     listarItems();
                     break;
+                case 99:
+                    easterEgg();
+                    break;
                 case 0:
                     System.out.println("Saindo do sistema...");
                     break;
@@ -161,6 +137,7 @@ public class Aplicacao {
         String nomeItem;
         String descricao;
         String tipo;
+        Raridade raridade ;
         double preco;
         int pin;
 
@@ -184,8 +161,33 @@ public class Aplicacao {
             preco = sc.nextDouble();
             sc.nextLine();
 
+            System.out.println("Escolha a raridade do item: ");
+            System.out.println("1- Comum");
+            System.out.println("2- Raro");
+            System.out.println("3- Épico");
+            System.out.println("4- Lendário - (Eventos)");
+            int opcao = sc.nextInt();
+            sc.nextLine();
+            switch (opcao) {
+                case 1:
+                    raridade = Raridade.COMUM;
+                    break;
+                case 2:
+                    raridade = Raridade.RARO;
+                    break;
+                case 3:
+                    raridade = Raridade.EPICO;
+                    break;
+                case 4:
+                    raridade = Raridade.LENDARIO;
+                    break;
+                default:
+                    raridade = Raridade.COMUM;
+                    break;
+            }
 
-            Item item = new Item(nomeItem, descricao, tipo, preco);
+
+            Item item = new Item(nomeItem, descricao, tipo, preco, raridade);
 
 
             jogador.adicionarItem(item);
@@ -207,11 +209,13 @@ public class Aplicacao {
         if (jogador != null) {
             System.out.println("Digite o id do item a ser removido: ");
             id = sc.nextInt();
+            sc.nextLine();
+
             Item item = cadastroItem.buscarItemPorid(id);
 
             if (item != null) {
                 cadastroItem.removeItem(item, pin);
-                System.out.println("Item: " + item.getNome() + " removido com sucesso!");
+                System.out.println("Item " + item.getNome() + " removido com sucesso!");
             } else {
                 System.out.println("Item não encontrado no cadastro.");
             }
@@ -266,5 +270,49 @@ public class Aplicacao {
         pin = sc.nextInt();
 
         cadastroItem.listarItems(pin);
+    }
+
+    /** Menu */
+    /** Jogadores */
+    /**
+     * nome, email, pin
+     */
+    public void easterEgg() {
+        Jogador j1 = new Jogador("Ricardo Carvalho", "rcarvalho@gmail.com", 212121);
+        Jogador j2 = new Jogador("Gustavo Silva", "gsilva@gmail.com", 191919);
+        Jogador j3 = new Jogador("Roberto Cobre", "robertinhoC@gmail.com", 696969);
+        Jogador j4 = new Jogador("Júlia Pinheiro", "julipinheiro@gmail.com", 252525);
+        Jogador j5 = new Jogador("Gabriel Ribeiro", "gabrielr@gmail.com", 272727);
+
+        cadastroJogador.cadastroJogador(j1);
+        cadastroJogador.cadastroJogador(j2);
+        cadastroJogador.cadastroJogador(j3);
+        cadastroJogador.cadastroJogador(j4);
+        cadastroJogador.cadastroJogador(j5);
+        /** Itens */
+        /**
+         * nome, descricao, tipo, preco
+         */
+        Item i1 = new Item("Katana", "Katana do Leonardo - Tartarugas Ninjas (Item de evento). Voltado a confrontos de curtas distâncias, a Katana tem uma vantagem por ser leve, podendo proporcionar ataques rápidos", "Arma Branca", 250.00, Raridade.LENDARIO);
+        Item i2 = new Item("Foice", "Arma branca que consegue dar ataques de curtas a médias distâncias, porém seu ataque será lento", "Arma Branca", 225.50, Raridade.RARO);
+        Item i3 = new Item("Arco de longa distância", "Arco feito para confronto de longas distâncias. Contém alto dano, porém demora para recarregar", "Arma a Distância", 100.00, Raridade.RARO);
+        Item i4 = new Item("Arco padrão", "Arco padrão", "Arma de Longa Distância", 150.00, Raridade.COMUM);
+        Item i5 = new Item("Arco de disparo rápido", "Arco feito para confrontos de médias distâncias. Contém alto poder de disparo, porém não tem tanto alcance", "Arma a Distância", 200.00, Raridade.RARO);
+        Item i6 = new Item("Armadura", "Feita de couro, por mais leve que seja, ela não suporta tanto ataques", "Proteção", 125.00, Raridade.RARO);
+        Item i7 = new Item("Armadura", "Feita com ferro, suporta ataques pesados, porém o jogador perde velocidade", "Proteção", 200.00, Raridade.EPICO);
+        Item i8 = new Item("Escudo", "Feito com madeira e ferro, ele consegue resistir ataques de curta e longas distâncias", "Proteção", 75.50, Raridade.COMUM);
+        Item i9 = new Item("Flecha", "Item disparado pelo arco", "Ferramenta", 50.00, Raridade.COMUM);
+
+        cadastroItem.addItemJogador(i1, "rcarvalho@gmail.com");
+        cadastroItem.addItemJogador(i2, "gsilva@gmail.com");
+        cadastroItem.addItemJogador(i3, "julipinheiro@gmail.com");
+        cadastroItem.addItemJogador(i4, "robertinhoC@gmail.com");
+        cadastroItem.addItemJogador(i5, "rcarvalho@gmail.com");
+        cadastroItem.addItemJogador(i6, "gabrielr@gmail.com");
+        cadastroItem.addItemJogador(i7, "julipinheiro@gmail.com");
+        cadastroItem.addItemJogador(i8, "gabrielr@gmail.com");
+        cadastroItem.addItemJogador(i9, "gsilva@gmail.com");
+
+        System.out.println("Easter Egg adicionado");
     }
 }

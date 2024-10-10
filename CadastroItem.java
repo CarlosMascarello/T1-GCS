@@ -17,6 +17,17 @@ public class CadastroItem {
         }
     }
 
+    public void addItemJogador(Item item, String email) {
+        Jogador jogador = cadastro.buscarJogadorPorEmail(email);
+
+        if (jogador != null) {
+            jogador.adicionarItem(item);
+            System.out.println("Item adicionado ao jogador.");
+        } else {
+            System.out.println("Jogador não encontrado.");
+        }
+    }
+
     public void removeItem(Item item, int pin) {
         Jogador jogador = cadastro.buscarJogadorPorPin(pin);
 

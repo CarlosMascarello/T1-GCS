@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Main {
+public class OrdenaOrdemAlfabetica {
     public static void main(String[] args) {
 
         //Chamar o array do inventario do usuário

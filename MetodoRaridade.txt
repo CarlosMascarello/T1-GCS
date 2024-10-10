@@ -7,11 +7,11 @@ enum Raridade {
     EPICO
 }
 
-class Item {
+ class MetodoRaridade {
     private String nome;
     private Raridade raridade;
 
-    public Item(String nome, Raridade raridade) {
+    public MetodoRaridade(String nome, Raridade raridade) {
         this.nome = nome;
         this.raridade = raridade;
     }

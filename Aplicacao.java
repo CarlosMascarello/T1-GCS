@@ -22,88 +22,145 @@ public class Aplicacao {
         int opcao;
 
         do {
-            System.out.println(VERDE + "### Sistema de Trocas ###" + RESET);
+            System.out.println(VERDE + "### Bem Vindo ###" + RESET);
             System.out.println(VERDE + "DIGITE A OPÇÃO DESEJADA" + RESET);
-            System.out.println(VERDE + "[1] Cadastrar novo jogador" + RESET);
-            System.out.println(VERDE + "[2] Ver seus itens" + RESET);
-            System.out.println(VERDE + "[3] Ver itens dos jogadores" + RESET);
-            System.out.println(VERDE + "[4] Buscar itens" + RESET);
-            System.out.println(VERDE + "[5] Troca de itens com outro jogador" + RESET);
-            System.out.println(VERDE + "[6] Ver propostas de troca" + RESET);
-            System.out.println(VERDE + "[7] Verificar propostas recebidas" + RESET);
-            System.out.println(VERDE + "[8] Exibir estatísticas gerais" + RESET);
-            System.out.println(VERDE + "[9] Verificar valor de item (barato/médio/caro)" + RESET);
-            System.out.println(VERDE + "[10] Verificar raridade de item (comum/raro/épico/lendário)" + RESET);
-            System.out.println(VERDE + "[11] Cadastrar item" + RESET);
-            System.out.println(VERDE + "[12] Selecionar e aceitar proposta de troca" + RESET);
+            System.out.println(VERDE + "[1] Login" + RESET);
+            System.out.println(VERDE + "[2] Criar conta" + RESET);
             System.out.println(VERDE + "[0] Sair" + RESET);
 
             opcao = sc.nextInt();
-
+            sc.nextLine();
             switch (opcao) {
                 case 1:
-                    registrarJogador();
+                    //logar
                     break;
                 case 2:
-                    // Implementar visualização dos itens do jogador
-                    break;
-                case 3:
-                    // Implementar visualização dos itens de outros jogadores
-                    break;
-                case 4:
-                    buscaItensId();
-                    break;
-                case 5:
-                    // Implementar troca de itens
-                    break;
-                case 6:
-                    // Implementar visualização de propostas de troca
-                    break;
-                case 7:
-                    selecionarPropostaTroca();
-                    break;
-                case 8:
-
-                    break;
-                case 9:
-                    // Implementar verificação do valor de um item
-                    break;
-                case 10:
-                    // Implementar verificação da raridade de um item
-                    break;
-                case 11:
-                    adicionarItem();
-                    break;
-                case 12:
-                    removerItem();
-                    break;
-                case 13:
-                    selecionarPropostaTroca();
-                    break;
-                case 14:
-                    cadastroJogador.listarJogadores();
-                    break;
-                case 15:
-                    listarItems();
-                    break;
-                case 99:
-                    easterEgg();
+                    registrarJogador();
                     break;
                 case 0:
                     System.out.println("Saindo do sistema...");
                     break;
                 default:
-                    System.out.println("Opção inválida. Tente novamente.");
+                    System.out.println("ERRO.");
+            }
+            while (opcao != 0) {
+                System.out.println(VERDE + "[1] Itens" + RESET);
+                System.out.println(VERDE + "[2] Efetuar trocas" + RESET);
+                System.out.println(VERDE + "[3] Estatíticas Gerais" + RESET);
+                System.out.println(VERDE + "[99] Easter Egg" + RESET);
+                System.out.println(VERDE + "[0] Sair" + RESET);
+                opcao = sc.nextInt();
+                sc.nextLine();
+
+                switch (opcao) {
+                    case 1:
+                        mostrarHUDItens();
+                        break;
+                    case 2:
+                        mostrarHUDTrocas();
+                        break;
+                    case 3:
+                        mostrarHUDEstatisticasGerais();
+                        break;
+                    case 0:
+                        System.out.println("Saindo do sistema...");
+                        break;
+                    case 99:
+                        easterEgg();
+                        break;
+                    default:
+                        System.out.println("Opção inválida. Tente novamente.");
+                }
+
             }
         } while (opcao != 0);
+    }
+
+    public void mostrarHUDItens() {
+        System.out.println(VERDE + "[1] Ver seus itens" + RESET);
+        System.out.println(VERDE + "[2] Ver itens dos jogadores" + RESET);
+        System.out.println(VERDE + "[3] Buscar itens pelo id" + RESET);
+        System.out.println(VERDE + "[4] Verificar valor de item (barato/médio/caro)" + RESET);
+        System.out.println(VERDE + "[5] Verificar raridade de item (comum/raro/épico/lendário)" + RESET);
+        System.out.println(VERDE + "[6] Cadastrar item" + RESET);
+        System.out.println(VERDE + "[7] Excluir Itens" + RESET);
+        System.out.println(VERDE + "[0] Sair" + RESET);
+
+        int opcao = sc.nextInt();
+        sc.nextLine();
+        while (opcao != 0) {
+            switch (opcao) {
+                case 1:
+                    listarItems();
+                    break;
+                case 2:
+                    // Implementar visualização dos itens de outros jogadores
+                    break;
+                case 3:
+                    buscaItensId();
+                    break;
+                case 4:
+                    // Implementar verificação do valor de um item
+                    break;
+                case 5:
+                    // Implementar verificação da raridade de um item
+                    break;
+                case 6:
+                    adicionarItem();
+                    break;
+                case 7:
+                    removerItem();
+                    break;
+                case 0:
+                    System.out.println("Volta ao sistema...");
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+        }
+    }
+
+    public void mostrarHUDTrocas() {
+        System.out.println(VERDE + "[1] Troca de itens com outro jogador" + RESET);
+        System.out.println(VERDE + "[2] Ver propostas de troca" + RESET);
+        System.out.println(VERDE + "[3] Verificar propostas recebidas" + RESET);
+        System.out.println(VERDE + "[4] Selecionar e aceitar proposta de troca" + RESET);
+
+        int opcao = sc.nextInt();
+        sc.nextLine();
+        while (opcao != 0) {
+            switch (opcao) {
+                case 1:
+                    // Implementar troca de itens
+                    break;
+                case 2:
+                    selecionarPropostaTroca();
+                    break;
+                case 3:
+                    // Implementar visualização de propostas de troca
+                    break;
+                case 4:
+
+                    break;
+                case 0:
+                    System.out.println("Volta ao sistema...");
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+
+
+            }
+        }
+    }
+
+    public void mostrarHUDEstatisticasGerais() {
+        System.out.println(VERDE + "[1] Exibir estatísticas gerais" + RESET);
     }
 
     public void registrarJogador() {
         String nome;
         String email;
         int pin = 0;
-
-        sc.nextLine();
 
         System.out.println("Digite seu nome: ");
         nome = sc.nextLine();
@@ -137,7 +194,7 @@ public class Aplicacao {
         String nomeItem;
         String descricao;
         String tipo;
-        Raridade raridade ;
+        Raridade raridade;
         double preco;
         int pin;
 
@@ -196,6 +253,7 @@ public class Aplicacao {
         } else {
             System.out.println("Jogador não encontrado. Faça o login primeiro!");
         }
+        mostrarHUDItens();
     }
 
     public void removerItem() {
@@ -270,6 +328,7 @@ public class Aplicacao {
         pin = sc.nextInt();
 
         cadastroItem.listarItems(pin);
+        mostrarHUDItens();
     }
 
     /** Menu */

@@ -5,6 +5,11 @@ public class Jogador {
     private String email;
     private int pin;
     private ArrayList<Item> itens;
+    private Item item;
+
+    public Item getItem() {
+        return item;
+    }
 
     //Contrutor
     public Jogador(String nome, String email, int pin) {

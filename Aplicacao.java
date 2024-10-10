@@ -106,7 +106,7 @@ public class Aplicacao {
                     cadastroJogador.listarJogadores();
                     break;
                 case 14:
-                    listarItems();
+                    listaItensJogador();
                     break;
                 case 0:
                     System.out.println("Saindo do sistema...");
@@ -149,6 +149,7 @@ public class Aplicacao {
         Jogador jogador = new Jogador(nome, email, pin);
         if (cadastroJogador.cadastroJogador(jogador)) {
             System.out.println("Jogador Cadastrado com sucesso!");
+            //esta funcionando
         }
     }
 
@@ -201,7 +202,7 @@ public class Aplicacao {
             Item item = cadastroItem.buscarItemPorNome(nomeItem);
 
             if (item != null) {
-                cadastroItem.removeItem(item, pin);
+                cadastroItem.removeItemJogador(item, pin);
                 System.out.println("Item removido com sucesso!");
             } else {
                 System.out.println("Item não encontrado no cadastro.");
@@ -250,12 +251,10 @@ public class Aplicacao {
         cadastroItem.buscarItemPorNome(nomeItem);
     }
 
-    public void listarItems() {
-        int pin;
-
+    public void listaItensJogador() {
         System.out.println("Digite seu pin: ");
-        pin = sc.nextInt();
-
-        cadastroItem.listarItems(pin);
+        int pin = sc.nextInt();
+        System.out.println(cadastroItem.listarItensJogador(pin));
+       // System.out.println(cadastroJogador.getItem());
     }
 }

@@ -32,7 +32,7 @@ public class Aplicacao {
             sc.nextLine();
             switch (opcao) {
                 case 1:
-                    //logar
+                    // Implementar logar
                     break;
                 case 2:
                     registrarJogador();
@@ -60,7 +60,7 @@ public class Aplicacao {
                         mostrarHUDTrocas();
                         break;
                     case 3:
-                        mostrarHUDEstatisticasGerais();
+                        mostrarEstatisticasGerais();
                         break;
                     case 0:
                         System.out.println("Saindo do sistema...");
@@ -134,13 +134,13 @@ public class Aplicacao {
                     // Implementar troca de itens
                     break;
                 case 2:
-                    selecionarPropostaTroca();
+                    // Implementar detalhe?
                     break;
                 case 3:
                     // Implementar visualização de propostas de troca
                     break;
                 case 4:
-
+                    selecionarPropostaTroca();
                     break;
                 case 0:
                     System.out.println("Volta ao sistema...");
@@ -153,8 +153,8 @@ public class Aplicacao {
         }
     }
 
-    public void mostrarHUDEstatisticasGerais() {
-        System.out.println(VERDE + "[1] Exibir estatísticas gerais" + RESET);
+    public void mostrarEstatisticasGerais() {
+        // implementar
     }
 
     public void registrarJogador() {
@@ -280,6 +280,7 @@ public class Aplicacao {
         } else {
             System.out.println("Jogador não encontrado. Faça o login primeiro!");
         }
+        mostrarHUDItens();
     }
 
     public void selecionarPropostaTroca() {
@@ -312,6 +313,7 @@ public class Aplicacao {
         } else {
             System.out.println("Escolha inválida.");
         }
+        mostrarHUDTrocas();
     }
 
     public void buscaItensId() {

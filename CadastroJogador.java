@@ -6,7 +6,22 @@ import java.util.ArrayList;
  */
 
 public class CadastroJogador {
+    private CadastroItem cadastroItem;
     private ArrayList<Jogador> jogadores;
+    private Item item;
+    Jogador jogador;
+
+    public CadastroItem getCadastroItem() {
+        return cadastroItem;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public Jogador getJogador() {
+        return jogador;
+    }
 
     /**
      * Construtor da classe CadastroJogador.
@@ -14,6 +29,8 @@ public class CadastroJogador {
 
     public CadastroJogador() {
         this.jogadores = new ArrayList<>();
+        this.jogador = jogador;
+
     }
 
     /**

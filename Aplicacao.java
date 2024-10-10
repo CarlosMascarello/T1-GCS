@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,6 +22,7 @@ public class Aplicacao {
 
         int opcao;
 
+
         do {
             System.out.println(VERDE + "### Bem Vindo ###" + RESET);
             System.out.println(VERDE + "DIGITE A OPÇÃO DESEJADA" + RESET);
@@ -33,6 +35,7 @@ public class Aplicacao {
             switch (opcao) {
                 case 1:
                     // Implementar logar
+                    opcao = 0;
                     break;
                 case 2:
                     registrarJogador();
@@ -43,52 +46,55 @@ public class Aplicacao {
                 default:
                     System.out.println("ERRO.");
             }
-            while (opcao != 0) {
-                System.out.println(VERDE + "[1] Itens" + RESET);
-                System.out.println(VERDE + "[2] Efetuar trocas" + RESET);
-                System.out.println(VERDE + "[3] Estatíticas Gerais" + RESET);
-                System.out.println(VERDE + "[99] Easter Egg" + RESET);
-                System.out.println(VERDE + "[0] Sair" + RESET);
-                opcao = sc.nextInt();
-                sc.nextLine();
-
-                switch (opcao) {
-                    case 1:
-                        mostrarHUDItens();
-                        break;
-                    case 2:
-                        mostrarHUDTrocas();
-                        break;
-                    case 3:
-                        mostrarEstatisticasGerais();
-                        break;
-                    case 0:
-                        System.out.println("Saindo do sistema...");
-                        break;
-                    case 99:
-                        easterEgg();
-                        break;
-                    default:
-                        System.out.println("Opção inválida. Tente novamente.");
-                }
-
-            }
         } while (opcao != 0);
+
+        do {
+            System.out.println(VERDE + "[1] Itens" + RESET);
+            System.out.println(VERDE + "[2] Efetuar trocas" + RESET);
+            System.out.println(VERDE + "[3] Estatíticas Gerais" + RESET);
+            System.out.println(VERDE + "[99] Easter Egg" + RESET);
+            System.out.println(VERDE + "[0] Sair" + RESET);
+            opcao = sc.nextInt();
+            sc.nextLine();
+
+            switch (opcao) {
+                case 1:
+                    mostrarHUDItens();
+                    break;
+                case 2:
+                    mostrarHUDTrocas();
+                    break;
+                case 3:
+                    mostrarEstatisticasGerais();
+                    break;
+                case 0:
+                    System.out.println("Saindo do sistema...");
+                    break;
+                case 99:
+                    easterEgg();
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+
+        } while (opcao != 0);
+
     }
 
     public void mostrarHUDItens() {
-        System.out.println(VERDE + "[1] Ver seus itens" + RESET);
-        System.out.println(VERDE + "[2] Ver itens dos jogadores" + RESET);
-        System.out.println(VERDE + "[3] Buscar itens pelo id" + RESET);
-        System.out.println(VERDE + "[4] Verificar valor de item (barato/médio/caro)" + RESET);
-        System.out.println(VERDE + "[5] Verificar raridade de item (comum/raro/épico/lendário)" + RESET);
-        System.out.println(VERDE + "[6] Cadastrar item" + RESET);
-        System.out.println(VERDE + "[7] Excluir Itens" + RESET);
-        System.out.println(VERDE + "[0] Sair" + RESET);
+        int opcao;
+        do {
+            System.out.println(VERDE + "[1] Ver seus itens" + RESET);
+            System.out.println(VERDE + "[2] Ver itens dos jogadores" + RESET);
+            System.out.println(VERDE + "[3] Buscar itens pelo id" + RESET);
+            System.out.println(VERDE + "[4] Verificar valor de item (barato/médio/caro)" + RESET);
+            System.out.println(VERDE + "[5] Verificar raridade de item (comum/raro/épico/lendário)" + RESET);
+            System.out.println(VERDE + "[6] Cadastrar item" + RESET);
+            System.out.println(VERDE + "[7] Excluir Itens" + RESET);
+            System.out.println(VERDE + "[0] Sair" + RESET);
 
-        int opcao = sc.nextInt();
-        sc.nextLine();
-        while (opcao != 0) {
+            opcao = sc.nextInt();
+
             switch (opcao) {
                 case 1:
                     listarItems();
@@ -117,7 +123,8 @@ public class Aplicacao {
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
             }
-        }
+
+        } while (opcao != 0);
     }
 
     public void mostrarHUDTrocas() {
@@ -125,9 +132,11 @@ public class Aplicacao {
         System.out.println(VERDE + "[2] Ver propostas de troca" + RESET);
         System.out.println(VERDE + "[3] Verificar propostas recebidas" + RESET);
         System.out.println(VERDE + "[4] Selecionar e aceitar proposta de troca" + RESET);
+        System.out.println(VERDE + "[0] Sair" + RESET);
 
+
+        // sc.nextLine();
         int opcao = sc.nextInt();
-        sc.nextLine();
         while (opcao != 0) {
             switch (opcao) {
                 case 1:
@@ -147,7 +156,6 @@ public class Aplicacao {
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
-
 
             }
         }

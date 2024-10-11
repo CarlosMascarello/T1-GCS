@@ -8,21 +8,20 @@ public class Aplicacao {
     private static Scanner sc = new Scanner(System.in);
     private CadastroJogador cadastroJogador;
     private CadastroItem cadastroItem;
-    private PropostaTroca proposta;
+    private PropostaTroca propostaTroca;
     private Estatisticas estatisticas;
 
     public Aplicacao() {
         cadastroJogador = new CadastroJogador();
         cadastroItem = new CadastroItem(cadastroJogador);
-       estatisticas = new Estatisticas(cadastroJogador, cadastroItem);
-
+        estatisticas = new Estatisticas(cadastroJogador, cadastroItem, propostaTroca);
     }
 
     /**
      * Inicio do HUD da Aplicação
      */
     public void executar() {
-
+        easterEgg();
         int opcao;
 
         while (true) {
@@ -58,7 +57,6 @@ public class Aplicacao {
             System.out.println(VERDE + "[1] Itens" + RESET);
             System.out.println(VERDE + "[2] Efetuar trocas" + RESET);
             System.out.println(VERDE + "[3] Estatíticas Gerais" + RESET);
-            System.out.println(VERDE + "[99] Easter Egg" + RESET);
             System.out.println(VERDE + "[0] Sair" + RESET);
             int opcao = sc.nextInt();
             sc.nextLine();
@@ -75,9 +73,6 @@ public class Aplicacao {
                     break;
                 case 3:
                     mostrarEstatisticasGerais();
-                    break;
-                case 99:
-                    easterEgg();
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
@@ -112,10 +107,10 @@ public class Aplicacao {
                     buscaItensId();
                     break;
                 case 4:
-                    consultaValor();
+                    verificaValor();
                     break;
                 case 5:
-                    // Implementar verificação da raridade de um item
+                    mostrarRaridade();
                     break;
                 case 6:
                     adicionarItem();
@@ -143,6 +138,7 @@ public class Aplicacao {
                 System.out.println("Saindo do sistema...");
                 break;
             }
+
             switch (opcao) {
                 case 1:
                     criarPropostaTroca();
@@ -158,8 +154,6 @@ public class Aplicacao {
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
-
-
             }
         }
     }
@@ -167,7 +161,6 @@ public class Aplicacao {
     public void mostrarEstatisticasGerais() {
         estatisticas.mostrarEstatisticasGerais();
     }
-
 
     /**
      * Codigos referentes aos itens
@@ -228,8 +221,7 @@ public class Aplicacao {
             }
 
 
-            Item item = new Item(nomeItem, descricao, tipo, preco, valor, raridade);
-
+            Item item = new Item(nomeItem, descricao, tipo, preco, raridade);
 
             jogador.adicionarItem(item);
 
@@ -278,7 +270,7 @@ public class Aplicacao {
         int id;
         System.out.println("Digite o nome do item a ser procurado. ");
         id = sc.nextInt();
-        cadastroItem.buscarItemPorid(id);
+        System.out.println(cadastroItem.buscarItemPorid(id));
     }
 
     public void listarItems() {
@@ -297,10 +289,9 @@ public class Aplicacao {
         });
 
         cadastroItem.listarItems(pin);
-        mostrarHUDItens();
     }
 
-    public void consultaValor() {
+    public void verificaValor(){
         int pin;
         int id;
 
@@ -312,14 +303,19 @@ public class Aplicacao {
             id = sc.nextInt();
             Item item = cadastroItem.buscarItemPorid(id);
             if (item != null) {
-                cadastroItem.valor(item);
+                cadastroItem.verificarValor(id);
             } else {
                 System.out.println("Item não encontrado");
             }
         } else {
             System.out.println("Jogador não encontrado");
         }
-        mostrarHUDItens();
+    }
+
+    public void mostrarRaridade() {
+        System.out.println("Digite o id do item que deseja ver a raridade");
+        int id = sc.nextInt();
+        System.out.println(cadastroItem.verificaItens(id));
     }
 
     /**
@@ -329,7 +325,6 @@ public class Aplicacao {
     public void criarPropostaTroca() {
         System.out.println("Digite o seu nome");
         String nomeProp = sc.nextLine();
-        sc.nextLine();
 
         System.out.println("Digite o ID do item que deseja enviar");
         int idProp = sc.nextInt();
@@ -337,7 +332,6 @@ public class Aplicacao {
 
         System.out.println("Digite o nome do usuário que tem o item que desejas");
         String nomeRequi = sc.nextLine();
-        sc.nextLine();
 
         System.out.println("Digite o ID do item que deseja receber");
         int idRequi = sc.nextInt();
@@ -349,9 +343,11 @@ public class Aplicacao {
         Item i1 = cadastroItem.buscarItemPorid(idProp);
         Item i2 = cadastroItem.buscarItemPorid(idRequi);
 
-        if (j1 != null && j2 != null && i1 != null && i2 != null)
-            proposta = new PropostaTroca(j1, j2, i1, i2);
-        else
+        if (j1 != null && j2 != null && i1 != null && i2 != null) {
+            propostaTroca = new PropostaTroca(j1, j2, i1, i2,  cadastroItem);
+            propostas.add(propostaTroca);
+            System.out.println("O id da proposta é " + propostaTroca.getId());
+        } else
             System.out.println("Erro de digitação encontrado! Tente novamnete");
     }
 
@@ -362,7 +358,7 @@ public class Aplicacao {
             return;
         }
 
-        System.out.println("Selecione uma proposta para visualizar detalhes:");
+        System.out.println("Selecione uma proposta para visualizar as opções:");
         for (int i = 0; i < propostas.size(); i++) {
             System.out.println("[" + i + "] " + propostas.get(i).getDescricao());
         }
@@ -379,35 +375,40 @@ public class Aplicacao {
             if (resposta == 1) {
                 System.out.println("Proposta aceita.");
                 proposta.aceitarProposta();
+                propostas.remove(proposta);
             } else if (resposta == 2) {
                 System.out.println("Proposta rejeitada.");
                 proposta.recusarProposta();
+                propostas.remove(proposta);
             }
         } else {
             System.out.println("Escolha inválida.");
         }
     }
 
-    public String mostrarDetalhesTroca() {
+    public void mostrarDetalhesTroca() {
+        boolean existeProposta = false;
         System.out.println("Qual o id da proposta?");
         int aux = sc.nextInt();
         for (PropostaTroca proposta : propostas) {
-            if (propostas.get(proposta.getId()).getId() == aux) {
-                return propostas.get(proposta.getId()).getDescricao();
-            } else {
-                System.out.println("ID não localizado!");
+            if (proposta.getId() == aux) {
+                System.out.println(proposta.getDescricao());
+                existeProposta = true;
             }
         }
-
-        return null;
+        if (!existeProposta) {
+            System.out.println("ID não localizado!");
+        }
     }
 
-    public String mostrarTrocasOcorridas() {
-        for (PropostaTroca proposta : propostas) {
-            System.out.println(proposta.toString());
+    public void mostrarTrocasOcorridas() {
+        if (propostas.isEmpty())
+            System.out.println("Trocas não localizadas");
+        else {
+            for (PropostaTroca proposta : propostas) {
+                System.out.println(proposta.toString());
+            }
         }
-
-        return "Trocas não localizadas";
     }
 
     /**
@@ -471,11 +472,11 @@ public class Aplicacao {
      * nome, email, pin
      */
     public void easterEgg() {
-        Jogador j1 = new Jogador("Ricardo Carvalho", "rcarvalho@gmail.com", 212121);
-        Jogador j2 = new Jogador("Gustavo Silva", "gsilva@gmail.com", 191919);
-        Jogador j3 = new Jogador("Roberto Cobre", "robertinhoC@gmail.com", 696969);
-        Jogador j4 = new Jogador("Júlia Pinheiro", "julipinheiro@gmail.com", 252525);
-        Jogador j5 = new Jogador("Gabriel Ribeiro", "gabrielr@gmail.com", 272727);
+        Jogador j1 = new Jogador("Ricardo", "rcarvalho@gmail.com", 212121);
+        Jogador j2 = new Jogador("Gustavo", "gsilva@gmail.com", 191919);
+        Jogador j3 = new Jogador("Roberto", "robertinhoC@gmail.com", 696969);
+        Jogador j4 = new Jogador("Júlia", "julipinheiro@gmail.com", 252525);
+        Jogador j5 = new Jogador("Gabriel", "gabrielr@gmail.com", 272727);
 
         cadastroJogador.cadastroJogador(j1);
         cadastroJogador.cadastroJogador(j2);
@@ -486,15 +487,15 @@ public class Aplicacao {
         /**
          * nome, descricao, tipo, preco
          */
-        Item i1 = new Item("Katana", "Katana do Leonardo - Tartarugas Ninjas (Item de evento). Voltado a confrontos de curtas distâncias, a Katana tem uma vantagem por ser leve, podendo proporcionar ataques rápidos", "Arma Branca", 250.00, "Valor caro", Raridade.LENDARIO);
-        Item i2 = new Item("Foice", "Arma branca que consegue dar ataques de curtas a médias distâncias, porém seu ataque será lento", "Arma Branca", 225.50, "Valor caro", Raridade.RARO);
-        Item i3 = new Item("Arco de longa distância", "Arco feito para confronto de longas distâncias. Contém alto dano, porém demora para recarregar", "Arma a Distância", 100.00, "Valor aceitável", Raridade.RARO);
-        Item i4 = new Item("Arco padrão", "Arco padrão", "Arma de Longa Distância", 150.00, "Valor aceitável", Raridade.COMUM);
-        Item i5 = new Item("Arco de disparo rápido", "Arco feito para confrontos de médias distâncias. Contém alto poder de disparo, porém não tem tanto alcance", "Arma a Distância", 200.00, "Valor caro", Raridade.RARO);
-        Item i6 = new Item("Armadura", "Feita de couro, por mais leve que seja, ela não suporta tanto ataques", "Proteção", 125.00,"Valor aceitável" , Raridade.RARO);
-        Item i7 = new Item("Armadura", "Feita com ferro, suporta ataques pesados, porém o jogador perde velocidade", "Proteção", 200.00, "Valor caro", Raridade.EPICO);
-        Item i8 = new Item("Escudo", "Feito com madeira e ferro, ele consegue resistir ataques de curta e longas distâncias", "Proteção", 75.50, "Valor barato", Raridade.COMUM);
-        Item i9 = new Item("Flecha", "Item disparado pelo arco", "Ferramenta", 50.00, "Valor barato", Raridade.COMUM);
+        Item i1 = new Item("Katana", "Katana do Leonardo - Tartarugas Ninjas (Item de evento). Voltado a confrontos de curtas distâncias, a Katana tem uma vantagem por ser leve, podendo proporcionar ataques rápidos", "Arma Branca", 250.00, Raridade.LENDARIO);
+        Item i2 = new Item("Foice", "Arma branca que consegue dar ataques de curtas a médias distâncias, porém seu ataque será lento", "Arma Branca", 225.50, Raridade.RARO);
+        Item i3 = new Item("Arco de longa distância", "Arco feito para confronto de longas distâncias. Contém alto dano, porém demora para recarregar", "Arma a Distância", 100.00, Raridade.RARO);
+        Item i4 = new Item("Arco padrão", "Arco padrão", "Arma de Longa Distância", 150.00, Raridade.COMUM);
+        Item i5 = new Item("Arco de disparo rápido", "Arco feito para confrontos de médias distâncias. Contém alto poder de disparo, porém não tem tanto alcance", "Arma a Distância", 200.00, Raridade.RARO);
+        Item i6 = new Item("Armadura", "Feita de couro, por mais leve que seja, ela não suporta tanto ataques", "Proteção", 125.00, Raridade.RARO);
+        Item i7 = new Item("Armadura", "Feita com ferro, suporta ataques pesados, porém o jogador perde velocidade", "Proteção", 200.00, Raridade.EPICO);
+        Item i8 = new Item("Escudo", "Feito com madeira e ferro, ele consegue resistir ataques de curta e longas distâncias", "Proteção", 75.50, Raridade.COMUM);
+        Item i9 = new Item("Flecha", "Item disparado pelo arco", "Ferramenta", 50.00, Raridade.COMUM);
 
         cadastroItem.addItemJogador(i1, "rcarvalho@gmail.com");
         cadastroItem.addItemJogador(i2, "gsilva@gmail.com");

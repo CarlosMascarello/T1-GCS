@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
-
  public class metodoRaridade {
     private String nome;
     private final Raridade  raridade;

@@ -68,7 +68,7 @@ public class CadastroItem {
     public void listarItensOutroJogador(String nome) {
         for (Jogador j : cadastro.getJogadores()) {
             if (j.getNome().equalsIgnoreCase(nome)) {
-                System.out.println("Itens do jogador "+nome + ":\n");
+                System.out.println("Itens do jogador " + nome + ":\n");
                 for (Item item : j.getItens()) {
                     System.out.println(item.toString());
                 }
@@ -78,15 +78,33 @@ public class CadastroItem {
         System.out.println("Jogador não encontrado.");
     }
 
-    public void valor(Item item) {
-        if (item.getPreco() >= 200.00) {
-            System.out.println("Item caro.");
-        } else if (item.getPreco() >= 100.00) {
-            System.out.println("Item de valor médio.");
-        } else {
-            System.out.println("Item barato.");
+    public void verificarValor(int id) {
+        for (Jogador j : cadastro.getJogadores()) {
+            for (Item item : j.getItens()) {
+                if (item.getId() == id) {
+                    if (item.getPreco() >= 200.00) {
+                        System.out.println("Item caro.");
+                    } else if (item.getPreco() >= 100.00) {
+                        System.out.println("Item de valor médio.");
+                    } else {
+                        System.out.println("Item barato.");
+                    }
+                    System.out.println("Valor do item: " + item.getPreco());
+                }
+            }
         }
-        System.out.println("Valor do item: " + item.getPreco());
+    }
+
+    public String verificaItens(int id) {
+        for (Jogador j1 : cadastro.getJogadores()) {
+            for (Item item : j1.getItens()) {
+                if (item.getId() == id) {
+                    return "\nNome: " + item.getNome() +
+                            "\nRaridade: " + item.getRaridade();
+                }
+            }
+        }
+        return "ID incorreto! Não foi possível localizar o item";
     }
 }
 

@@ -59,6 +59,10 @@ public class Jogador {
                 "\npin: " + pin + '\n';
     }
 
+    public String detalharJogador() {
+        return "\nnome: " + nome +
+                "\nemail: " + email + '\n';
+    }
 
     /** Criar usuário */
 }

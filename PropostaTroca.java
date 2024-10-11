@@ -1,5 +1,8 @@
 import javax.xml.crypto.Data;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.List;
 import java.util.Random;
 
 public class PropostaTroca {
@@ -7,12 +10,14 @@ public class PropostaTroca {
     private Jogador jogadorRequisitado;
     private Item itemOferecido;
     private Item itemDesejado;
+    private CadastroItem cadastroItem;
     private int id;
     private LocalDateTime data;
     private String status;
+    private List<PropostaTroca> propostas;
 
     //Construtor
-    public PropostaTroca(Jogador jogadorOfertante, Jogador jogadorRequisitado, Item itemOferecido, Item itemDesejado) {
+    public PropostaTroca(Jogador jogadorOfertante, Jogador jogadorRequisitado, Item itemOferecido, Item itemDesejado, CadastroItem cadastroItem) {
         Random random = new Random();
         this.id = random.nextInt(10000);
         this.jogadorOfertante = jogadorOfertante;
@@ -21,6 +26,8 @@ public class PropostaTroca {
         this.itemDesejado = itemDesejado;
         this.data = LocalDateTime.now();
         this.status = "Pendente";
+        this.propostas = new ArrayList<>();
+        this.cadastroItem = cadastroItem;
     }
 
     //Getters
@@ -52,31 +59,41 @@ public class PropostaTroca {
         return data;
     }
 
+    public List<PropostaTroca> getPropostas() {
+        return propostas;
+    }
+
     public String getDescricao() {
-        return "ID (" + id + ") da prospota feito por " + jogadorOfertante.getNome() + " que oferece " + itemOferecido.getNome() + " por " + itemDesejado.getNome() + " do " + jogadorRequisitado.getNome();
+        return "ID (" + id + ") da prospota feita por " + jogadorOfertante.getNome() + " que oferece " + itemOferecido.getNome() + " por " + itemDesejado.getNome() + " pertencente à " + jogadorRequisitado.getNome();
     }
 
     @Override
     public String toString() {
         return "Proposta de Troca:" +
-                "\nJogador Ofertante: " + jogadorOfertante +
-                "\nJogador Requisitado: " + jogadorRequisitado +
-                "\nItem Oferecido: " + itemOferecido +
-                "\nItem Desejado: " + itemDesejado +
+                "\nJogador Ofertante: " + jogadorOfertante.detalharJogador() +
+                "\nJogador Requisitado: " + jogadorRequisitado.detalharJogador() +
+                "\nItem Oferecido: " + itemOferecido.detalharItem() +
+                "\nItem Desejado: " + itemDesejado.detalharItem() +
                 "\nStatus: " + status +
                 "\nData: " + data + '\n';
     }
 
     public void aceitarProposta() {
-        Item aux = itemDesejado;
-        itemDesejado = itemOferecido;
-        itemOferecido = aux;
+        cadastroItem.addItemJogador(itemDesejado, jogadorOfertante.getEmail());
+        cadastroItem.removeItem(itemDesejado, jogadorRequisitado.getPin());
+        cadastroItem.addItemJogador(itemOferecido, jogadorRequisitado.getEmail());
+        cadastroItem.removeItem(itemOferecido, jogadorOfertante.getPin());
         status = "Aceito";
 
     }
 
     public void recusarProposta() {
-
         status = "Recusado";
     }
+
+   /* public int contadorPropostaAceitarERecusadas() {
+        for (int i = 0; i < ) {
+
+        }
+    }*/
 }

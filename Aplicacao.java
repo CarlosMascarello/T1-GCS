@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Aplicacao {
 
@@ -337,6 +335,15 @@ public class Aplicacao {
 
         System.out.println("Digite seu pin: ");
         pin = sc.nextInt();
+
+        Jogador jogador = cadastroJogador.buscarJogadorPorPin(pin);
+        ArrayList<Item> itens = jogador.getItens();
+
+        Collections.sort(itens, new Comparator<Item>() {
+            public int compare(Item i1, Item i2) {
+                return i1.getNome().compareTo(i2.getNome());
+            }
+        });
 
         cadastroItem.listarItems(pin);
         mostrarHUDItens();

@@ -112,7 +112,7 @@ public class Aplicacao {
                     buscaItensId();
                     break;
                 case 4:
-                    verificaValor();
+                    consultaValor();
                     break;
                 case 5:
                     // Implementar verificação da raridade de um item
@@ -165,7 +165,7 @@ public class Aplicacao {
     }
 
     public void mostrarEstatisticasGerais() {
-        // implementar
+        estatisticas.mostrarEstatisticasGerais();
     }
 
 
@@ -300,23 +300,26 @@ public class Aplicacao {
         mostrarHUDItens();
     }
 
-    public void verificaValor(){
+    public void consultaValor() {
         int pin;
         int id;
+
         System.out.println("Digite o seu pin: ");
         pin = sc.nextInt();
-        if(cadastroJogador.buscarJogadorPorPin(pin) != null) {
-            System.out.println("Digite o id do item a ser procurado: ");
+
+        if (cadastroJogador.buscarJogadorPorPin(pin) != null) {
+            System.out.println("Digite o id do item: ");
             id = sc.nextInt();
-            if (cadastroItem.buscarItemPorid(id) != null){
-                cadastroItem.verificaValor(id);
-                return;
-            }else{
-                System.out.println("Item não encontrado.");
+            Item item = cadastroItem.buscarItemPorid(id);
+            if (item != null) {
+                cadastroItem.valor(item);
+            } else {
+                System.out.println("Item não encontrado");
             }
-        }else{
-            System.out.println("Jogador não encontrado.");
+        } else {
+            System.out.println("Jogador não encontrado");
         }
+        mostrarHUDItens();
     }
 
     /**

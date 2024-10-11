@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Aplicacao {
 
@@ -11,11 +9,13 @@ public class Aplicacao {
     private CadastroJogador cadastroJogador;
     private CadastroItem cadastroItem;
     private PropostaTroca proposta;
-
+    private Estatisticas estatisticas;
 
     public Aplicacao() {
         cadastroJogador = new CadastroJogador();
         cadastroItem = new CadastroItem(cadastroJogador);
+       estatisticas = new Estatisticas(cadastroJogador, cadastroItem);
+
     }
 
     /**
@@ -85,7 +85,6 @@ public class Aplicacao {
         }
     }
 
-
     public void mostrarHUDItens() {
         while (true) {
             System.out.println(VERDE + "[1] Ver seus itens" + RESET);
@@ -113,7 +112,7 @@ public class Aplicacao {
                     buscaItensId();
                     break;
                 case 4:
-                    // Implementar verificação do valor de um item
+                    verificaValor();
                     break;
                 case 5:
                     // Implementar verificação da raridade de um item
@@ -126,7 +125,6 @@ public class Aplicacao {
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
-
             }
         }
     }
@@ -160,6 +158,8 @@ public class Aplicacao {
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
+
+
             }
         }
     }
@@ -177,6 +177,7 @@ public class Aplicacao {
         String nomeItem;
         String descricao;
         String tipo;
+        String valor = "";
         Raridade raridade;
         double preco;
         int pin;
@@ -227,9 +228,11 @@ public class Aplicacao {
             }
 
 
-            Item item = new Item(nomeItem, descricao, tipo, preco, raridade);
+            Item item = new Item(nomeItem, descricao, tipo, preco, valor, raridade);
+
 
             jogador.adicionarItem(item);
+
             System.out.println("Item adicionado com sucesso ao jogador " + jogador.getNome() + "!");
         } else {
             System.out.println("Jogador não encontrado. Faça o login primeiro!");
@@ -262,6 +265,15 @@ public class Aplicacao {
         }
     }
 
+    public void mostrarItensOutroJogador() {
+        String nome;
+
+        System.out.println("Digite o nome do outro jogador: ");
+        nome = sc.nextLine();
+
+        cadastroItem.listarItensOutroJogador(nome);
+    }
+
     public void buscaItensId() {
         int id;
         System.out.println("Digite o nome do item a ser procurado. ");
@@ -275,16 +287,36 @@ public class Aplicacao {
         System.out.println("Digite seu pin: ");
         pin = sc.nextInt();
 
+        Jogador jogador = cadastroJogador.buscarJogadorPorPin(pin);
+        ArrayList<Item> itens = jogador.getItens();
+
+        Collections.sort(itens, new Comparator<Item>() {
+            public int compare(Item i1, Item i2) {
+                return i1.getNome().compareTo(i2.getNome());
+            }
+        });
+
         cadastroItem.listarItems(pin);
+        mostrarHUDItens();
     }
 
-    public void mostrarItensOutroJogador() {
-        String nome;
-
-        System.out.println("Digite o nome do outro jogador: ");
-        nome = sc.nextLine();
-
-        cadastroItem.listarItensOutroJogador(nome);
+    public void verificaValor(){
+        int pin;
+        int id;
+        System.out.println("Digite o seu pin: ");
+        pin = sc.nextInt();
+        if(cadastroJogador.buscarJogadorPorPin(pin) != null) {
+            System.out.println("Digite o id do item a ser procurado: ");
+            id = sc.nextInt();
+            if (cadastroItem.buscarItemPorid(id) != null){
+                cadastroItem.verificaValor(id);
+                return;
+            }else{
+                System.out.println("Item não encontrado.");
+            }
+        }else{
+            System.out.println("Jogador não encontrado.");
+        }
     }
 
     /**
@@ -351,7 +383,6 @@ public class Aplicacao {
         } else {
             System.out.println("Escolha inválida.");
         }
-        //mostrarHUDTrocas();
     }
 
     public String mostrarDetalhesTroca() {
@@ -365,7 +396,6 @@ public class Aplicacao {
             }
         }
 
-        //mostrarHUDTrocas();
         return null;
     }
 
@@ -453,15 +483,15 @@ public class Aplicacao {
         /**
          * nome, descricao, tipo, preco
          */
-        Item i1 = new Item("Katana", "Katana do Leonardo - Tartarugas Ninjas (Item de evento). Voltado a confrontos de curtas distâncias, a Katana tem uma vantagem por ser leve, podendo proporcionar ataques rápidos", "Arma Branca", 250.00, Raridade.LENDARIO);
-        Item i2 = new Item("Foice", "Arma branca que consegue dar ataques de curtas a médias distâncias, porém seu ataque será lento", "Arma Branca", 225.50, Raridade.RARO);
-        Item i3 = new Item("Arco de longa distância", "Arco feito para confronto de longas distâncias. Contém alto dano, porém demora para recarregar", "Arma a Distância", 100.00, Raridade.RARO);
-        Item i4 = new Item("Arco padrão", "Arco padrão", "Arma de Longa Distância", 150.00, Raridade.COMUM);
-        Item i5 = new Item("Arco de disparo rápido", "Arco feito para confrontos de médias distâncias. Contém alto poder de disparo, porém não tem tanto alcance", "Arma a Distância", 200.00, Raridade.RARO);
-        Item i6 = new Item("Armadura", "Feita de couro, por mais leve que seja, ela não suporta tanto ataques", "Proteção", 125.00, Raridade.RARO);
-        Item i7 = new Item("Armadura", "Feita com ferro, suporta ataques pesados, porém o jogador perde velocidade", "Proteção", 200.00, Raridade.EPICO);
-        Item i8 = new Item("Escudo", "Feito com madeira e ferro, ele consegue resistir ataques de curta e longas distâncias", "Proteção", 75.50, Raridade.COMUM);
-        Item i9 = new Item("Flecha", "Item disparado pelo arco", "Ferramenta", 50.00, Raridade.COMUM);
+        Item i1 = new Item("Katana", "Katana do Leonardo - Tartarugas Ninjas (Item de evento). Voltado a confrontos de curtas distâncias, a Katana tem uma vantagem por ser leve, podendo proporcionar ataques rápidos", "Arma Branca", 250.00, "Valor caro", Raridade.LENDARIO);
+        Item i2 = new Item("Foice", "Arma branca que consegue dar ataques de curtas a médias distâncias, porém seu ataque será lento", "Arma Branca", 225.50, "Valor caro", Raridade.RARO);
+        Item i3 = new Item("Arco de longa distância", "Arco feito para confronto de longas distâncias. Contém alto dano, porém demora para recarregar", "Arma a Distância", 100.00, "Valor aceitável", Raridade.RARO);
+        Item i4 = new Item("Arco padrão", "Arco padrão", "Arma de Longa Distância", 150.00, "Valor aceitável", Raridade.COMUM);
+        Item i5 = new Item("Arco de disparo rápido", "Arco feito para confrontos de médias distâncias. Contém alto poder de disparo, porém não tem tanto alcance", "Arma a Distância", 200.00, "Valor caro", Raridade.RARO);
+        Item i6 = new Item("Armadura", "Feita de couro, por mais leve que seja, ela não suporta tanto ataques", "Proteção", 125.00,"Valor aceitável" , Raridade.RARO);
+        Item i7 = new Item("Armadura", "Feita com ferro, suporta ataques pesados, porém o jogador perde velocidade", "Proteção", 200.00, "Valor caro", Raridade.EPICO);
+        Item i8 = new Item("Escudo", "Feito com madeira e ferro, ele consegue resistir ataques de curta e longas distâncias", "Proteção", 75.50, "Valor barato", Raridade.COMUM);
+        Item i9 = new Item("Flecha", "Item disparado pelo arco", "Ferramenta", 50.00, "Valor barato", Raridade.COMUM);
 
         cadastroItem.addItemJogador(i1, "rcarvalho@gmail.com");
         cadastroItem.addItemJogador(i2, "gsilva@gmail.com");

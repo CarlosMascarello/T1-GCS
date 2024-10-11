@@ -77,6 +77,25 @@ public class CadastroItem {
         }
         System.out.println("Jogador não encontrado.");
     }
+
+    public String verificaValor(int id) {
+
+        String valor = "";
+
+        for (Jogador j : cadastro.getJogadores()) {
+            for (Item item : j.getItens()) {
+                if (item.getPreco() < 100.0) {
+                    valor = "valor barato";
+                } else if (item.getPreco() >= 100.0 && item.getPreco() < 200.0) {
+                    valor = "valor aceitável";
+                } else if (item.getPreco() >= 200.0) {
+                    valor = "valor caro";
+                } else {
+                    valor = "Valor invalido";
+                }
+            }
+        }
+        System.out.println("Este item possui um " + valor);
+        return valor;
+    }
 }
-
-

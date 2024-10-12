@@ -1,17 +1,12 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class Estatisticas {
     private CadastroJogador cadastroJogador;
     private CadastroItem cadastroItem;
     private PropostaTroca propostaTroca;
-    private List<PropostaTroca> listaProposta;
 
     public Estatisticas(CadastroJogador cadastroJogador, CadastroItem cadastroItem, PropostaTroca propostaTroca) {
         this.cadastroJogador = cadastroJogador;
         this.cadastroItem = cadastroItem;
         this.propostaTroca = propostaTroca;
-       // this.listaProposta =
     }
 
     public int totalJogadores() {
@@ -36,20 +31,28 @@ public class Estatisticas {
         return precoTotal;
     }
 
- /*   public int contarPrpostasAceitasERecusadas() {
+    public int contarPropostasAceitasERecusadas() {
         int contador = 0;
-        for (PropostaTroca proposta :) {
-
+        if (propostaTroca != null) {
+            for (PropostaTroca proposta : propostaTroca.getPropostas()) {
+                if (proposta.getStatus().equals("Recusado") || proposta.getStatus().equals("Aceito")) {
+                    contador++;
+                }
+            }
         }
         return contador;
-    }*/
+    }
 
     public void mostrarEstatisticasGerais() {
         System.out.println("Estatísticas Gerais:");
         System.out.println("Total de Jogadores: " + totalJogadores());
         System.out.println("Total de Itens: " + totalItens());
         System.out.println("Valor Total dos Itens: " + precoTotal());
-        System.out.println("Quantidade de propostas aceitas/recusadas:" + "");
-        System.out.println("Quantidade de propostas pendentes: " + "");
+        int propostasAceitasERecusadas = contarPropostasAceitasERecusadas();
+        System.out.println("Quantidade de propostas aceitas/recusadas: " + propostasAceitasERecusadas);
+
+        int propostasPendentes = propostaTroca.getPropostas().size() - propostasAceitasERecusadas;
+        System.out.println("Quantidade de propostas pendentes: " + propostasPendentes);
     }
 }
+

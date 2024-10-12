@@ -14,6 +14,7 @@ public class Aplicacao {
     public Aplicacao() {
         cadastroJogador = new CadastroJogador();
         cadastroItem = new CadastroItem(cadastroJogador);
+        propostaTroca = new PropostaTroca();
         estatisticas = new Estatisticas(cadastroJogador, cadastroItem, propostaTroca);
     }
 
@@ -170,7 +171,6 @@ public class Aplicacao {
         String nomeItem;
         String descricao;
         String tipo;
-        String valor = "";
         Raridade raridade;
         double preco;
         int pin;

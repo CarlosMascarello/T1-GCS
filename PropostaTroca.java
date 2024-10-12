@@ -14,7 +14,9 @@ public class PropostaTroca {
     private int id;
     private LocalDateTime data;
     private String status;
-    private List<PropostaTroca> propostas;
+    private ArrayList<PropostaTroca> propostas = new ArrayList<>();
+    private int contatorTrocasEfetuadas = 0;
+    private int contatorRequisitadosEfetuadas = 0;
 
     //Construtor
     public PropostaTroca(Jogador jogadorOfertante, Jogador jogadorRequisitado, Item itemOferecido, Item itemDesejado, CadastroItem cadastroItem) {
@@ -26,8 +28,11 @@ public class PropostaTroca {
         this.itemDesejado = itemDesejado;
         this.data = LocalDateTime.now();
         this.status = "Pendente";
-        this.propostas = new ArrayList<>();
         this.cadastroItem = cadastroItem;
+       // this.propostas = new ArrayList<>();
+    }
+
+    public PropostaTroca() {
     }
 
     //Getters
@@ -63,19 +68,29 @@ public class PropostaTroca {
         return propostas;
     }
 
+    public int getContatorTrocasEfetuadas() {
+        return contatorTrocasEfetuadas;
+    }
+
+    public int getContatorRequisitadosEfetuadas() {
+        return contatorRequisitadosEfetuadas;
+    }
+
+    public void setContatorTrocasEfetuadas(int contatorTrocasEfetuadas) {
+        this.contatorTrocasEfetuadas = contatorTrocasEfetuadas;
+    }
+
+    public void setContatorRequisitadosEfetuadas(int contatorRequisitadosEfetuadas) {
+        this.contatorRequisitadosEfetuadas = contatorRequisitadosEfetuadas;
+    }
+
     public String getDescricao() {
         return "ID (" + id + ") da prospota feita por " + jogadorOfertante.getNome() + " que oferece " + itemOferecido.getNome() + " por " + itemDesejado.getNome() + " pertencente à " + jogadorRequisitado.getNome();
     }
 
     @Override
     public String toString() {
-        return "Proposta de Troca:" +
-                "\nJogador Ofertante: " + jogadorOfertante.detalharJogador() +
-                "\nJogador Requisitado: " + jogadorRequisitado.detalharJogador() +
-                "\nItem Oferecido: " + itemOferecido.detalharItem() +
-                "\nItem Desejado: " + itemDesejado.detalharItem() +
-                "\nStatus: " + status +
-                "\nData: " + data + '\n';
+        return "Proposta de Troca:" + "\nJogador Ofertante: " + jogadorOfertante.detalharJogador() + "\nJogador Requisitado: " + jogadorRequisitado.detalharJogador() + "\nItem Oferecido: " + itemOferecido.detalharItem() + "\nItem Desejado: " + itemDesejado.detalharItem() + "\nStatus: " + status + "\nData: " + data + '\n';
     }
 
     public void aceitarProposta() {
@@ -84,16 +99,10 @@ public class PropostaTroca {
         cadastroItem.addItemJogador(itemOferecido, jogadorRequisitado.getEmail());
         cadastroItem.removeItem(itemOferecido, jogadorOfertante.getPin());
         status = "Aceito";
-
     }
 
     public void recusarProposta() {
         status = "Recusado";
     }
-
-   /* public int contadorPropostaAceitarERecusadas() {
-        for (int i = 0; i < ) {
-
-        }
-    }*/
 }
+

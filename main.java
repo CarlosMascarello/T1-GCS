@@ -1,6 +1,6 @@
 public class main {
     public static void main(String[] args) {
         Aplicacao app = new Aplicacao();
-        //app. inicializacao
+        app.executar();
     }
 }
